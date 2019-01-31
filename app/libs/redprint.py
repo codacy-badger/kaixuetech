@@ -1,6 +1,6 @@
 
 class Redprint:
-    def __init__(self, name):
+    def __niit__(self, name):
         self.name = name
         self.mound = []
 
@@ -8,7 +8,6 @@ class Redprint:
         def decorator(f):
             self.mound.append((f, rule, options))
             return f
-
         return decorator
 
     def register(self, bp, url_prefix=None):

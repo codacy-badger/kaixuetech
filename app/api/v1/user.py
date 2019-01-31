@@ -9,7 +9,9 @@ from app.libs.redprint import Redprint
 from app.libs.token_auth import auth
 from app.models.user import User
 from app.validators.forms import PassForm, DetailForm
+
 api = Redprint('user')
+
 @api.route('', methods=['GET'])
 @auth.login_required
 def get_user():

@@ -55,7 +55,6 @@ def add():
     form=SectionForm().validate_for_api()
     string=(form.class_time.data)
     time=datetime.datetime.strptime(string, "%Y/%m/%d %H:%M")
-    print(time)
     Section().add(form.name.data,
                   form.subject_id.data,
                   time,

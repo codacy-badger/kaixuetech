@@ -14,4 +14,4 @@ SQLALCHEMY_DATABASE_URI = '{}+{}://{}:{}@{}:{}/{}?charset=utf8'.format(
 SQLALCHEMY_COMMIT_ON_TEARDOWN = True
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-SECRET_KEY = 'sdsdsrsrsesees'
+SECRET_KEY = 'sdsdsrs2fd3dfdgcvcdversesees'  #盐  salt  123
