@@ -1,14 +1,12 @@
-"""
- Created by 七月 on 2018/5/10.
-"""
-from wtforms import StringField, IntegerField
+
+from wtforms import StringField, IntegerField,FloatField
 from wtforms.validators import DataRequired, length, Email, Regexp
 from wtforms import ValidationError
 from app.libs.enums import ClientTypeEnum
 from app.models.user import User
 from app.validators.base import BaseForm as Form
 
-__author__ = '七月'
+
 
 
 class ClientForm(Form):
@@ -92,8 +90,15 @@ class JsCodeForm(Form):
 
 class SubjectForm(Form):
     name = StringField(validators=[DataRequired()])
-
     year = StringField(validators=[DataRequired()])
     semester = StringField(validators=[DataRequired()])
     abstract = StringField(validators=[DataRequired()])
     sub_type = IntegerField(validators=[])
+
+class SectionForm(Form):
+    name = StringField(validators=[DataRequired()])
+    subject_id= IntegerField(validators=[DataRequired()])
+    class_time=IntegerField(validators=[])
+    duration=FloatField(validators=[])
+    learn_data=StringField(validators=[])
+    abstract = StringField(validators=[])
