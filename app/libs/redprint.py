@@ -1,6 +1,6 @@
 
 class Redprint:
-    def __niit__(self, name):
+    def __init__(self, name):
         self.name = name
         self.mound = []
 

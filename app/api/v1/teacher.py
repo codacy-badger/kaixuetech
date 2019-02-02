@@ -10,7 +10,7 @@ from app.libs.token_auth import auth
 from app.models.teacher import Teacher
 from app.validators.forms import SchoolForm, TeacherForm
 
-api = Redprint('student')
+api = Redprint('teacher')
 
 @api.route('', methods=['POST'])
 @auth.login_required

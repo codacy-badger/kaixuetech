@@ -5,7 +5,7 @@
 
 from flask import current_app, jsonify
 from app.libs.enums import ClientTypeEnum
-from app.libs.error_code import AuthFailed
+from app.libs.error_code import AuthFailed, Success
 from app.libs.redprint import Redprint
 from app.models.user import User
 from app.validators.forms import ClientForm, TokenForm
@@ -23,6 +23,10 @@ def get_basic_auth_str(username, password=''):
     # 解码
     # decodestr = base64.b64decode(encodestr)
     return 'Basic ' + encodestr.decode()
+
+@api.route('/logout', methods=['POST'])
+def logout():
+    return Success()
 
 @api.route('', methods=['POST'])
 def get_token():
@@ -74,11 +78,13 @@ def get_token():
                                 expiration)
     s=token.decode('ascii')
     b=get_basic_auth_str(s)
+
     t = {
         'token': s,
         'key':b
     }
-    return jsonify(t), 201
+
+    return jsonify(t), 200
 
 
 @api.route('/secret', methods=['POST'])

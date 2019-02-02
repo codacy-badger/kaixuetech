@@ -5,11 +5,10 @@ from werkzeug.exceptions import HTTPException
 
 from app.libs.error import APIException
 
-__author__ = '七月'
 
 
 class Success(APIException):
-    code = 201
+    code = 200
     msg = 'ok'
     error_code = 0
 
