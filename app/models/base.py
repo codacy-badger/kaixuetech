@@ -55,9 +55,9 @@ db = SQLAlchemy(query_class=Query)
 
 class Base(db.Model):
     __abstract__ = True
-    create_time = Column(DateTime, default=datetime.now)
-    updated_time =Column(DateTime, default=datetime.now, onupdate=datetime.now)
-    status = Column(SmallInteger, default=1)
+    create_time = Column(DateTime, default=datetime.now,comment="创建时间")
+    updated_time =Column(DateTime, default=datetime.now, onupdate=datetime.now,comment="更新时间")
+    status = Column(SmallInteger, default=1,comment="数据状态")
 
     def keys(self):
         return self.fields

@@ -28,7 +28,6 @@ def get_user():
     """
     uid = g.user.uid
     user = User.query.filter_by(id=uid).first_or_404()
-    print(jsonify(user))
     return jsonify(user)
 
 
@@ -98,3 +97,37 @@ def change_detail():
     if form.nickname.data is not None:
         user.nickname = form.nickname.data
     return Success()
+
+@api.route('/alladmin', methods=['GET'])
+@auth.login_required
+def all_admin():
+    """
+       获取管理用户信息
+       ---
+       tags:
+         - User
+       parameters:
+           - in: "header"
+             name: "Authorization"
+             description: base64加密后的token
+             required: true
+       """
+    user = User.query.filter(User.auth>10).all()
+    return jsonify(user)
+
+@api.route('/alluser', methods=['GET'])
+@auth.login_required
+def all_user():
+    """
+       获取所有用户信息
+       ---
+       tags:
+         - User
+       parameters:
+           - in: "header"
+             name: "Authorization"
+             description: base64加密后的token
+             required: true
+       """
+    user = User.query.filter(User.auth<10).all()
+    return jsonify(user)

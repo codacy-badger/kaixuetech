@@ -9,14 +9,15 @@ from app.models.base import Base, db
 
 
 class User(Base):
-    id = Column(Integer, primary_key=True)
-    email = Column(String(24), unique=True)
-    nickname = Column(String(24), unique=True,default="未设置昵称")
-    auth = Column(SmallInteger, default=1)
-    phone=Column(String(11), unique=True, nullable=False)
-    wechat_open_id= Column(String(255), unique=True)
-    wechat_union_id= Column(String(255))
-    _password = Column('password', String(100))
+    id = Column(Integer, primary_key=True, comment='用户id')
+    email = Column(String(24), unique=True, comment='用户邮箱')
+    avatar_url =Column(Text, comment='头像url')
+    comments=Column(Text, comment='备注')
+    auth = Column(SmallInteger, default=1, comment='权限小于10为普通会员。大于10 为管理员')
+    phone=Column(String(11), unique=True, comment='手机号')
+    nickname = Column(String(24), default="未设置昵称", comment='用户昵称')
+    wechat_open_id= Column(String(255), unique=True, comment='微信小程序唯一标识')
+    _password = Column('password', String(100), comment='密码')
 
 
     @orm.reconstructor
@@ -29,7 +30,6 @@ class User(Base):
     @password.setter
     def password(self, raw):
         self._password = generate_password_hash(raw)
-
     @staticmethod
     def verify(phone, password):
         user = User.query.filter_by(phone=phone).first_or_404()
