@@ -30,7 +30,7 @@ def add_school():
              required: true
            - in: "body"
              name: "body"
-             description: 提交新的密码
+             description: 添加学校
              required: true
              schema:
                type: "object"

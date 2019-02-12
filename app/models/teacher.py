@@ -9,7 +9,7 @@ from app.models.base import Base, db
 class Teacher(Base):
     user_id = Column(Integer, primary_key=True)
     head_url = Column(Text)
-    abstract=Column(String(255))
+    abstract=Column(Text)
     school_name=Column(String(255))
 
     @orm.reconstructor

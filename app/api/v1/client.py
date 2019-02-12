@@ -10,14 +10,40 @@ from app.validators.forms import ClientForm, UserPhoneForm
 
 api = Redprint('client')
 
+
 @api.route('/register', methods=['POST'])
 def create_client():
+    """
+            注册用户
+            ---
+            tags:
+              - User
+            parameters:
+                - in: "body"
+                  name: "body"
+                  description: 注册用户
+                  required: true
+                  schema:
+                    type: "object"
+                    properties:
+                        account:
+                            type: "string"
+                            example: "17864195555"
+                        secret:
+                            type: "string"
+                            example: "123456"
+                        type:
+                            type: "int"
+                            example: 101
+
+         """
     form = ClientForm().validate_for_api()
     promise = {
         ClientTypeEnum.USER_MOBILE: __register_user_by_phone
     }
     promise[form.type.data]()
     return Success()
+
 
 def __register_user_by_phone():
     form = UserPhoneForm().validate_for_api()

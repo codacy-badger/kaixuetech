@@ -3,10 +3,11 @@
 # @Author  : 昨夜
 # @Email   : 903165495@qq.com
 
-from flask import jsonify, g
+from flask import jsonify, g, request
 from app.libs.error_code import Success
 from app.libs.redprint import Redprint
 from app.libs.token_auth import auth
+from app.libs.upload import qiniu_upload_file, save_duration
 from app.models.user import User
 from app.validators.forms import PassForm, DetailForm
 
@@ -62,7 +63,7 @@ def change_password():
     return Success()
 
 
-@api.route('/detail', methods=['POST'])
+@api.route('/wxdetail', methods=['POST'])
 @auth.login_required
 def change_detail():
     """
@@ -98,36 +99,12 @@ def change_detail():
         user.nickname = form.nickname.data
     return Success()
 
-@api.route('/alladmin', methods=['GET'])
+@api.route('/data', methods=['POST'])
 @auth.login_required
-def all_admin():
-    """
-       获取管理用户信息
-       ---
-       tags:
-         - User
-       parameters:
-           - in: "header"
-             name: "Authorization"
-             description: base64加密后的token
-             required: true
-       """
-    user = User.query.filter(User.auth>10).all()
-    return jsonify(user)
+def data():
+    uid = g.user.uid
+    f = request.files['file']
+    data=qiniu_upload_file(f)
+    file=save_duration(data,uid)
+    return jsonify(file)
 
-@api.route('/alluser', methods=['GET'])
-@auth.login_required
-def all_user():
-    """
-       获取所有用户信息
-       ---
-       tags:
-         - User
-       parameters:
-           - in: "header"
-             name: "Authorization"
-             description: base64加密后的token
-             required: true
-       """
-    user = User.query.filter(User.auth<10).all()
-    return jsonify(user)
