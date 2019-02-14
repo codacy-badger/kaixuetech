@@ -9,6 +9,7 @@ from app.models.base import Base, db
 
 
 class User(Base):
+    __tablename__ = 'user'
     id = Column(Integer, primary_key=True, comment='用户id')
     email = Column(String(24), unique=True, comment='用户邮箱')
     avatar_url =Column(Text, comment='头像url')

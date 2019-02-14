@@ -2,7 +2,7 @@
 # @Time    : 2019/1/25 16:16
 # @Author  : 昨夜
 # @Email   : 903165495@qq.com
-from flask import g
+from flask import g, jsonify
 
 from app.libs.error_code import ParameterException, Success
 from app.libs.redprint import Redprint
@@ -11,6 +11,25 @@ from app.models.teacher import Teacher
 from app.validators.forms import SchoolForm, TeacherForm
 
 api = Redprint('teacher')
+
+@api.route('', methods=['get'])
+@auth.login_required
+def get():
+    """
+         查询老师信息
+         ---
+         tags:
+           - Teacher
+         parameters:
+             - in: "header"
+               name: "Authorization"
+               description: base64加密后的token
+               required: true
+
+         """
+    uid = g.user.uid
+    user = Teacher.query.filter_by(user_id=uid).first_or_404().hide('subjectes')
+    return jsonify(user)
 
 @api.route('', methods=['POST'])
 @auth.login_required
@@ -41,7 +60,7 @@ def add():
     if user is not None:
         return ParameterException()
     form = SchoolForm().validate_for_api()
-    Teacher().school(uid, form.school.data)
+    Teacher().addschool(uid, form.school.data)
     return Success()
 
 @api.route('/detail', methods=['POST'])
@@ -74,12 +93,9 @@ def detail():
     form = TeacherForm().validate_for_api()
     uid = g.user.uid
     user = Teacher.query.filter_by(user_id=uid).first_or_404()
-    if form.abstract.data is not None:
-        user.abstract=form.abstract.data
-    if form.head_url.data is not None:
-        user.head_url=form.head_url.data
-    if form.abstract.data is None and  form.head_url.data is None:
+    if form.abstract.data is None and form.head_url.data is None:
         return ParameterException()
+    user.updetail(form.head_url.data,form.abstract.data)
     return Success()
 
 

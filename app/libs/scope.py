@@ -23,7 +23,7 @@ class Scope:
 class AdminScope(Scope):
     # allow_api = ['v1.user+super_get_user',
     #              'v1.user+super_delete_user']
-    allow_module = ['v1.user','v1.student','v1.subject','v1.section']
+    allow_module = ['v1.user','v1.student','v1.subject','v1.section','v1.teacher']
 
     def __init__(self):
         # 排除

@@ -1,5 +1,4 @@
 from sqlalchemy import Column, String, Integer, Text, orm, SmallInteger
-
 from app.models.base import Base, db
 
 

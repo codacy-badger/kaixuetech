@@ -47,7 +47,7 @@ def get_token():
                 properties:
                     account:
                         type: "string"
-                        example: "17864195206"
+                        example: "17864180048"
                     secret:
                         type: "string"
                         example: "123456"

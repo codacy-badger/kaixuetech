@@ -8,6 +8,6 @@ with app.app_context():
         # 创建一个超级管理员
         user = User()
         user.password = '123456'
-        user.phone ='17864195206'
-        user.auth = 1
+        user.phone ='17864180048'
+        user.auth = 11
         db.session.add(user)

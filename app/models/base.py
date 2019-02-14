@@ -1,15 +1,7 @@
-"""
- Created by 七月 on 2018/5/11.
-"""
 
 
 from app.libs.error_code import NotFound, ParameterException
-
-__author__ = '七月'
-
-
 from datetime import datetime
-
 from flask_sqlalchemy import SQLAlchemy as _SQLAlchemy, BaseQuery
 from sqlalchemy import inspect, Column, Integer, SmallInteger, orm,DateTime
 from contextlib import contextmanager

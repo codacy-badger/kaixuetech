@@ -90,8 +90,8 @@ class JsCodeForm(Form):
 
 class SubjectForm(Form):
     name = StringField(validators=[DataRequired()])
+    picture_url = StringField(validators=[DataRequired()])
     year = StringField(validators=[DataRequired()])
-    semester = StringField(validators=[DataRequired()])
     abstract = StringField(validators=[DataRequired()])
     sub_type = IntegerField(validators=[])
 
