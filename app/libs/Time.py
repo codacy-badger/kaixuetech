@@ -14,3 +14,18 @@ class Time():
         today = datetime.date.today()
         formatted_today = today.strftime('%y%m%d')
         return str(formatted_today)
+
+    @staticmethod
+    def todatetime(str):
+        time = datetime.datetime.strptime(str, "%Y/%m/%d %H:%M")
+        return time
+    @staticmethod
+    def isVaildDate(date):
+        try:
+            if ":" in date:
+                time.strptime(date, "%Y-%m-%d %H:%M:%S")
+            else:
+                time.strptime(date, "%Y-%m")
+            return True
+        except:
+            return False

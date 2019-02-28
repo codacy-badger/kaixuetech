@@ -3,7 +3,7 @@
 # @Author  : 昨夜
 # @Email   : 903165495@qq.com
 
-from flask import jsonify, g, request
+from flask import jsonify, g, request, session
 from app.libs.error_code import Success
 from app.libs.redprint import Redprint
 from app.libs.token_auth import auth
@@ -12,6 +12,16 @@ from app.models.user import User
 from app.validators.forms import PassForm, DetailForm
 
 api = Redprint('user')
+
+# 测试用的
+@api.route('/test', methods=['GET'])
+def get_user1():
+    username=["111","123"]
+    session['username'] = username
+    return "sss"
+@api.route('/test1', methods=['GET'])
+def get_user12():
+    return jsonify(session.get('username'))
 
 @api.route('', methods=['GET'])
 @auth.login_required

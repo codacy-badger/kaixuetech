@@ -28,7 +28,7 @@ def get():
 
          """
     uid = g.user.uid
-    user = Teacher.query.filter_by(user_id=uid).first_or_404().hide('subjectes')
+    user = Teacher.query.filter_by(user_id=uid).first_or_404().hide('user_id')
     return jsonify(user)
 
 @api.route('', methods=['POST'])
@@ -56,9 +56,8 @@ def add():
                        example: "山东师范大学"
     """
     uid = g.user.uid
-    user = Teacher.query.filter_by(user_id=uid).first()
-    if user is not None:
-        return ParameterException()
+    Teacher.query.filter_by(user_id=uid).first_or_401()
+
     form = SchoolForm().validate_for_api()
     Teacher().addschool(uid, form.school.data)
     return Success()

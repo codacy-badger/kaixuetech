@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+# @Time    : 2019/2/27 17:39
+# @Author  : 昨夜
+# @Email   : 903165495@qq.com
 from sqlalchemy import Column,String,SmallInteger,Integer,orm,Text
 
 from app.models.base import Base, db

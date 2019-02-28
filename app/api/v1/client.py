@@ -38,14 +38,20 @@ def create_client():
 
          """
     form = ClientForm().validate_for_api()
+
     promise = {
         ClientTypeEnum.USER_MOBILE: __register_user_by_phone
     }
+
     promise[form.type.data]()
+
     return Success()
 
 
 def __register_user_by_phone():
+
     form = UserPhoneForm().validate_for_api()
+    print(form)
+    print("======================")
     User.register_by_phone(form.account.data,
                            form.secret.data)

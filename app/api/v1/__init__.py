@@ -1,6 +1,5 @@
 from flask import Blueprint
-from app.api.v1 import user,client,token,student,teacher,wechat,subject,section
-
+from app.api.v1 import user, client, token, student, teacher, wechat, subject, stusub
 
 
 def create_blueprint_v1():
@@ -12,5 +11,5 @@ def create_blueprint_v1():
     teacher.api.register(bp_v1)
     wechat.api.register(bp_v1)
     subject.api.register(bp_v1)
-    section.api.register(bp_v1)
+    stusub.api.register(bp_v1)
     return bp_v1

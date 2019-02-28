@@ -5,6 +5,8 @@
 from flask import g, jsonify, request
 
 from app.libs.error_code import Success, DeleteSuccess, Forbidden
+from app.libs.qr_code import build_qr
+from app.libs.ran_num import random_code
 from app.libs.redprint import Redprint
 from app.libs.token_auth import auth
 from app.models.base import db
@@ -39,26 +41,19 @@ def add():
                  name:
                      type: "string"
                      example: "高等数学"
-                 year:
-                     type: "string"
-                     example: "2018-2019"
-
-                 picture_url:
-                     type: "string"
-                     example: "www.baidu.com"
                  abstract:
                      type: "string"
                      example: "高等数学是一门高深的语言"
-                 sub_type:
-                     type: "int"
-                     example: 1
      """
   uid = g.user.uid
   form = SubjectForm().validate_for_api()
-  subject = Subject.add(uid, form.name.data, form.picture_url.data, form.year.data, form.abstract.data,
-                        form.sub_type.data)
-  user = Teacher.query.filter_by(user_id=uid).first_or_404()
-  user.subjectes.append(subject)
+  teacher = Teacher.query.filter_by(user_id=uid).first_or_404()
+  invitation=random_code()
+  from flask import current_app
+  url=current_app.config.get('UPLOAD_FOLDER')+'v1/stusub/{}/{}'.format(g.token,invitation)
+  invi_qr=build_qr(url)
+  subject=Subject.add(uid, invitation, form.name.data, form.abstract.data, invi_qr)
+  teacher.subjectes.append(subject)
   return Success()
 
 
@@ -86,13 +81,27 @@ def get(p,pp):
         required: false
         type: "int"
 """
-
-
   uid = g.user.uid
   user = Subject.query.filter_by(user_id=uid).paginate(page=p, per_page=pp, error_out=False)
+  data = {"items": user.items, "pages": user.pages, 'total': user.total, 'page': user.page, 'per_page': user.per_page,'has_next':user.has_next,'has_prev':user.has_prev}
+  return jsonify(data)
 
-  data = {"items": user.items, "pages": user.pages, 'total': user.total, 'page': user.page, 'per_page': user.per_page}
-
+@api.route('', methods=['GET'])
+@auth.login_required
+def getall():
+  """
+    查询课程信息
+    ---
+    tags:
+      - Subject
+    parameters:
+      - in: "header"
+        name: "Authorization"
+        description: base64加密后的token
+        required: true
+"""
+  uid = g.user.uid
+  data = Subject.query.filter_by(user_id=uid).all()
   return jsonify(data)
 
 @api.route('/<int:id>/', methods=['GET'])
@@ -122,7 +131,7 @@ def getone(id):
 @auth.login_required
 def delete_user(id):
   """
-    删除课程信息
+    归档课程信息
     ---
     tags:
       - Subject
@@ -140,9 +149,9 @@ def delete_user(id):
   """
   uid = g.user.uid
   with db.auto_commit():
-      user = Subject.query.filter_by(id=id).first_or_404()
-      if user.auth<10 and user.user_id !=uid:
+      subject = Subject.query.filter_by(id=id).first_or_404()
+      if subject.user_id !=uid:
         raise Forbidden()
       else:
-        user.delete()
+        subject.gui()
   return DeleteSuccess()

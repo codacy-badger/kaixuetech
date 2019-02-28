@@ -23,6 +23,7 @@ def verify_password(token, password):
         return False
     else:
         g.user = user_info
+        g.token = token
         return True
 
 

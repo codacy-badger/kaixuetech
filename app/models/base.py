@@ -34,7 +34,7 @@ class Query(BaseQuery):
         rv = self.first()
         if not rv:
             return True
-        return ParameterException()
+        raise ParameterException()
     def first_or_404(self):
         rv = self.first()
         if not rv:

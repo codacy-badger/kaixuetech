@@ -52,7 +52,7 @@ class UserPhoneForm(ClientForm):
     ])
 
     def validate_account(self, value):
-        if User.query.filter_by(email=value.data).first():
+        if User.query.filter_by(phone=value.data).first():
             raise ValidationError()
 
 
@@ -76,13 +76,20 @@ class DetailForm(Form):
 class SchoolForm(Form):
     school = StringField(validators=[DataRequired()])
 
-class AuthForm(Form):
-    name= StringField(validators=[])
-    auth_url= StringField(validators=[])
-    sno=StringField(validators=[])
+class StudentForm(Form):
+    name = StringField(validators=[DataRequired()])
+    sno = StringField(validators=[DataRequired()])
+    school_name = StringField(validators=[DataRequired()])
+    auth_url = StringField(validators=[DataRequired()])
+class preStudentForm(Form):
+    major= StringField(validators=[])
+    grade=StringField(validators=[])
+    classno=StringField(validators=[])
+    enrolltime=StringField(validators=[
+  ])
 
 class TeacherForm(Form):
-    head_url = StringField(validators=[length(min=15)])
+    head_url = StringField(validators=[])
     abstract = StringField(validators=[])
 
 class JsCodeForm(Form):
@@ -90,15 +97,10 @@ class JsCodeForm(Form):
 
 class SubjectForm(Form):
     name = StringField(validators=[DataRequired()])
-    picture_url = StringField(validators=[DataRequired()])
-    year = StringField(validators=[DataRequired()])
-    abstract = StringField(validators=[DataRequired()])
-    sub_type = IntegerField(validators=[])
-
-class SectionForm(Form):
-    name = StringField(validators=[DataRequired()])
-    subject_id= IntegerField(validators=[DataRequired()])
-    class_time=IntegerField(validators=[])
-    duration=FloatField(validators=[])
-    learn_data=StringField(validators=[])
     abstract = StringField(validators=[])
+
+class invitationForm(Form):
+    invi= StringField(validators=[DataRequired(),length(min=5,max=6)])
+
+class invitation2Form(invitationForm):
+    token=StringField(validators=[])
