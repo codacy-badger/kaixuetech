@@ -3,6 +3,8 @@
 # @Author  : 昨夜
 # @Email   : 903165495@qq.com
 from sqlalchemy import Column, String, Integer, Text, orm, SmallInteger, ForeignKey
+from sqlalchemy.orm import relationship
+
 from app.models.base import Base, db
 
 
@@ -18,7 +20,8 @@ class Student(Base):
     grade= Column(String(255), comment='学生年级')
     classno= Column(String(255), comment='学生班级')
     enrolltime= Column(String(255), comment='学生入学时间')
-
+    # 与学生选课中心表的一对多 父亲#
+    studentes_middle_subjectes = relationship("Studentes_Middle_Subject", back_populates='students', lazy='dynamic')
 
     @orm.reconstructor
     def __init__(self):
@@ -36,9 +39,3 @@ class Student(Base):
             db.session.add(student)
             return student
 
-    def auth(self, name, auth_url, sno):
-        self.name = name
-        self.auth_url = auth_url
-
-        self.sno = sno
-        self.examine = 2

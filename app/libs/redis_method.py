@@ -6,4 +6,4 @@ from app.libs.add_redis import r
 
 # 学校名来获得代码
 def school_to_code(name):
-    return r.hget("school_list",name)
+    return r.hget("school_list",name).decode()

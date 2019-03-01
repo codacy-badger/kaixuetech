@@ -8,7 +8,7 @@ from app.libs.error_code import ParameterException, Success
 from app.libs.redprint import Redprint
 from app.libs.token_auth import auth
 from app.models.teacher import Teacher
-from app.validators.forms import SchoolForm, TeacherForm
+from app.validators.forms import TeacherForm, Teacher1Form
 
 api = Redprint('teacher')
 
@@ -28,14 +28,14 @@ def get():
 
          """
     uid = g.user.uid
-    user = Teacher.query.filter_by(user_id=uid).first_or_404().hide('user_id')
+    user = Teacher.query.filter_by(user_id=uid).first_or_404()
     return jsonify(user)
 
 @api.route('', methods=['POST'])
 @auth.login_required
 def add():
     """
-       添加学校
+       添加老师基本信息
        ---
        tags:
          - Teacher
@@ -54,13 +54,15 @@ def add():
                    school:
                        type: "string"
                        example: "山东师范大学"
+                   name:
+                       type: "string"
+                       example: "方世杰"
     """
     uid = g.user.uid
     Teacher.query.filter_by(user_id=uid).first_or_401()
-
-    form = SchoolForm().validate_for_api()
-    Teacher().addschool(uid, form.school.data)
-    return Success()
+    form = Teacher1Form().validate_for_api()
+    teacher=Teacher().addschool(uid, form.school.data, form.name.data)
+    return Success(data=teacher)
 
 @api.route('/detail', methods=['POST'])
 @auth.login_required
@@ -88,14 +90,14 @@ def detail():
                        head_url:
                            type: "string"
                            example: "https://gss0.bdstatic.com/70cFfyinKgQIm2_p8IuM_a/daf/pic/item/b3fb43166d224f4a0a3944f604f790529922d1b6.jpg"
-        """
+    """
     form = TeacherForm().validate_for_api()
     uid = g.user.uid
     user = Teacher.query.filter_by(user_id=uid).first_or_404()
     if form.abstract.data is None and form.head_url.data is None:
         return ParameterException()
-    user.updetail(form.head_url.data,form.abstract.data)
-    return Success()
+    teacher=user.updetail(form.head_url.data,form.abstract.data).append('head_url','abstract')
+    return Success(data=teacher)
 
 
 

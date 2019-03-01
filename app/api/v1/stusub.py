@@ -4,10 +4,12 @@
 # @Email   : 903165495@qq.com
 from flask import g
 
+
 from app.libs.error_code import Success, ParameterException
 from app.libs.redprint import Redprint
 from app.libs.token_auth import auth, verify_auth_token
-from app.models.stusub import StuSub
+from app.models.student import Student
+from app.models.studentes_middle_subject import Studentes_Middle_Subject
 from app.models.subject import Subject
 from app.validators.forms import invitationForm, invitation2Form
 
@@ -35,47 +37,48 @@ def add():
                    properties:
                        invi:
                            type: "string"
-                           example: "X4Y972"
+                           example: "D6FQEC"
 
     """
     uid = g.user.uid
     form = invitationForm().validate_for_api()
-    StuSub.query.filter_by(student_id=uid ,invitation =form.invi.data).first_or_401()
-    subject = Subject.query.filter_by(invitation=form.invi.data).first_or_404().append('user_id')
-    StuSub.addstusub(student_id=uid,
-                            subject_id=subject.id,
-                            teacher_id=subject.user_id,
-                            invitation=form.invi.data)
-    return Success()
+    Studentes_Middle_Subject.query.filter_by(student_id=uid ,invitation =form.invi.data,sub_status=1).first_or_401()
+    subject = Subject.query.filter_by(invitation=form.invi.data).first_or_404()
+    student = Student.query.filter_by(user_id=uid).first_or_404()
 
-@api.route('/<string:token>/<string:invi>', methods=['get'])
+    data=Studentes_Middle_Subject.addstusub(subjects=subject,
+                                            students=student,
+                                            invitation=form.invi.data)
+    return Success(data=data)
 
-def add_by_qr(token,invi):
-    """
-       归档课程信息
-       ---
-       tags:
-         - StdSub
-       parameters:
-         - name: "token"
-           in: "path"
-           description: 令牌
-           required: true
-           type: "string"
-         - name: "invi"
-           in: "path"
-           description: 随机码
-           required: true
-           type: "string"
-
-     """
-    uid = verify_auth_token(token).uid
-    if len(invi)!=6:
-        raise ParameterException()
-    StuSub.query.filter_by(student_id=uid, invitation=invi).first_or_401()
-    subject = Subject.query.filter_by(invitation=invi).first_or_404().append('user_id')
-    StuSub.addstusub(student_id=uid,
-                     subject_id=subject.id,
-                     teacher_id=subject.user_id,
-                     invitation=invi)
-    return Success()
+# @api.route('/<string:token>/<string:invi>', methods=['get'])
+#
+# def add_by_qr(token,invi):
+#     """
+#        归档课程信息
+#        ---
+#        tags:
+#          - StuSub
+#        parameters:
+#          - name: "token"
+#            in: "path"
+#            description: 令牌
+#            required: true
+#            type: "string"
+#          - name: "invi"
+#            in: "path"
+#            description: 随机码
+#            required: true
+#            type: "string"
+#
+#      """
+#     uid = verify_auth_token(token).uid
+#     if len(invi)!=6:
+#         raise ParameterException()
+#     StuSub.query.filter_by(student_id=uid, invitation=invi).first_or_401()
+#     subject = Subject.query.filter_by(invitation=invi).first_or_404().append('user_id')
+#     StuSub.addstusub(student_id=uid,
+#                      subject_id=subject.id,
+#                      teacher_id=subject.user_id,
+#                      invitation=invi)
+#     return Success()

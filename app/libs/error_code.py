@@ -48,6 +48,10 @@ class NotFound(APIException):
     msg = 'the resource are not found O__O...'
     error_code = 1001
 
+class RepeatException1(APIException):
+    code = 403
+    msg = '请勿重复添加！'
+    error_code = 1000
 
 class AuthFailed(APIException):
     code = 401

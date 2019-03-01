@@ -13,7 +13,7 @@ class BaseForm(Form):
         args = request.args.to_dict()
         super(BaseForm, self).__init__(data=data, **args)
 
-    def validate_for_api(self):
+    def validate_for_api(self) -> object:
         valid = super(BaseForm, self).validate()
         if not valid:
             # form errors

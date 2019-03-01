@@ -13,7 +13,7 @@ class JSONEncoder(_JSONEncoder):
             return o.strftime('%Y-%m-%d')
         if isinstance(o, datetime):
             return o.strftime('%Y-%m-%d %M:%H:%S')
-
+        print(type(o))
         raise ServerError()
 
 

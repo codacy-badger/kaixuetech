@@ -22,10 +22,9 @@ def addschool(schoolcode,schoolname,province):
     elif schoolcode<1000:
         schoolcode="0"+str(schoolcode)
     r.hset('school_list', schoolname, schoolcode)
-    with app.app_context():
-        with db.auto_commit():
-            # 创建一个超级管理员
-            School().add(schoolcode, schoolname, province)
+    # with app.app_context():
+    #     with db.auto_commit():
+    #         School().add(schoolcode, schoolname, province)
 
 if __name__ == '__main__':
     app = create_app()

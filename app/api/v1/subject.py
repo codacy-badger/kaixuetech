@@ -49,12 +49,14 @@ def add():
   form = SubjectForm().validate_for_api()
   teacher = Teacher.query.filter_by(user_id=uid).first_or_404()
   invitation=random_code()
+
   from flask import current_app
+  # 这里修改二维码地址
   url=current_app.config.get('UPLOAD_FOLDER')+'v1/stusub/{}/{}'.format(g.token,invitation)
   invi_qr=build_qr(url)
-  subject=Subject.add(uid, invitation, form.name.data, form.abstract.data, invi_qr)
-  teacher.subjectes.append(subject)
-  return Success()
+  subject=Subject.add(uid, invitation, form.name.data, form.abstract.data, invi_qr,teacher)
+
+  return Success(data=subject)
 
 
 @api.route('/<int:p>/<int:pp>/', methods=['GET'])

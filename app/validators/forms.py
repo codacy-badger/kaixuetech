@@ -73,9 +73,9 @@ class DetailForm(Form):
     wechat_open_id= StringField(validators=[])
     nickname= StringField(validators=[])
 
-class SchoolForm(Form):
+class Teacher1Form(Form):
     school = StringField(validators=[DataRequired()])
-
+    name=StringField(validators=[DataRequired()])
 class StudentForm(Form):
     name = StringField(validators=[DataRequired()])
     sno = StringField(validators=[DataRequired()])
@@ -104,3 +104,9 @@ class invitationForm(Form):
 
 class invitation2Form(invitationForm):
     token=StringField(validators=[])
+
+class AttendForm(Form):
+    subject_id=IntegerField(validators=[DataRequired()])
+    attend_name= StringField(validators=[DataRequired()])
+class StudentAttendForm(Form):
+    code=StringField(validators=[DataRequired() ,Regexp(r'^[0-9]{4}$')])

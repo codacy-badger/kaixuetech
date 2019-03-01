@@ -36,7 +36,7 @@ def register_swagger(app):
 #session存在redis
 def register_session(app):
     app.config['SESSION_TYPE'] = 'redis'
-    app.config['SESSION_REDIS'] = redis.Redis(host='47.110.251.32', port='6379')
+    app.config['SESSION_REDIS'] = redis.Redis(host='47.110.251.32', port='6379',db=1,password='ihaveabigdream')
     app.config['SESSION_KEY_PREFIX'] = 'flask'
     Session(app)
 #跨域

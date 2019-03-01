@@ -48,6 +48,14 @@ def num_code(i):
     num = random.randint(0, 9)
     s = str(num)
     return s
-def random_num():
-    return (''.join(list(map(code,[0,0,0,0]))))
+def random_num(head):
+    code2=(''.join(list(map(code,[0,0,0,0]))))
+    code1=head+code2
+    hl = hashlib.md5()
+    hl.update(code1.encode(encoding='utf-8'))
+    end = r.hset('attend_list', hl.hexdigest(), hl.hexdigest())
+    if end == 1:
+        return code1
+    else:
+        random_code(head)
 
