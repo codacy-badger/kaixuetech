@@ -17,6 +17,10 @@ class DeleteSuccess(Success):
     code = 202
     error_code = 1
 
+class HadDone(Success):
+    code = 300
+    msg = '重复提交'
+    error_code = 0
 
 class ServerError(APIException):
     code = 500

@@ -110,3 +110,8 @@ class AttendForm(Form):
     attend_name= StringField(validators=[DataRequired()])
 class StudentAttendForm(Form):
     code=StringField(validators=[DataRequired() ,Regexp(r'^[0-9]{4}$')])
+    attend_position=StringField(validators=[DataRequired()])
+    ip=StringField(validators=[DataRequired(),Regexp(r'(2(5[0-5]{1}|[0-4]\d{1})|[0-1]?\d{1,2})(\.(2(5[0-5]{1}|[0-4]\d{1})|[0-1]?\d{1,2})){3}')])
+
+class TeacherEndAttendForm(Form):
+    attend_id= IntegerField(validators=[DataRequired()])

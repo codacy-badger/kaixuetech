@@ -14,7 +14,8 @@ class Attend(Base):
     __tablename__ = 'attend'
     id = Column(Integer, primary_key=True, comment='考勤id')
     attend_name = Column(String(255), comment='考勤名称')
-    attend_number=Column(String(14), comment='学校编号+年月日+4位随机码')
+    attend_number_secret=Column(String(14), comment='学校编号+年月日+4位随机码')
+    attend_number = Column(String(4), comment='4位随机码')
     attend_state=Column(SmallInteger,default="1",comment='0:未开放，1：签到中，2：签到结束')
     start_time=Column(DateTime,default=datetime.now, comment='发起签到的时间')
     end_time=Column(DateTime, comment='结束签到的时间')
@@ -37,6 +38,7 @@ class Attend(Base):
             attend.attend_name = attend_name
             attend.subjectes = subjectes
             attend.subject_id = subjectes.id
-            attend.attend_number = attend_number
+            attend.attend_number_secret = attend_number
+            attend.attend_number = attend_number[-4:]
             db.session.add(attend)
             return attend

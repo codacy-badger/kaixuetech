@@ -33,7 +33,7 @@ class Query(BaseQuery):
     def first_or_401(self):
         rv = self.first()
         if not rv:
-            return True
+            return rv
         raise RepeatException1()
     def first_or_404(self):
         rv = self.first()

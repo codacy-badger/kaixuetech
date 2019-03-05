@@ -49,7 +49,7 @@ def num_code(i):
     s = str(num)
     return s
 def random_num(head):
-    code2=(''.join(list(map(code,[0,0,0,0]))))
+    code2=(''.join(list(map(num_code,[0,0,0,0]))))
     code1=head+code2
     hl = hashlib.md5()
     hl.update(code1.encode(encoding='utf-8'))
