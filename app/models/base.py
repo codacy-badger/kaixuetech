@@ -1,6 +1,6 @@
 
 
-from app.libs.error_code import NotFound, ParameterException, RepeatException1
+from app.libs.error_code import NotFound, ParameterException, RepeatException1, Forbidden
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy as _SQLAlchemy, BaseQuery
 from sqlalchemy import inspect, Column, Integer, SmallInteger, orm,DateTime
@@ -32,9 +32,19 @@ class Query(BaseQuery):
 
     def first_or_401(self):
         rv = self.first()
-        if not rv:
+        if rv is not None:
             return rv
         raise RepeatException1()
+    def first_or_400(self):
+        rv = self.first()
+        if rv is not None:
+            return rv
+        raise ParameterException()
+    def first_or_403(self):
+        rv = self.first()
+        if rv is not None:
+            return rv
+        raise Forbidden()
     def first_or_404(self):
         rv = self.first()
         if not rv:

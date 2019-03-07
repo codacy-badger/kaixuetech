@@ -17,5 +17,6 @@ class BaseForm(Form):
         valid = super(BaseForm, self).validate()
         if not valid:
             # form errors
+
             raise ParameterException(msg=self.errors)
         return self

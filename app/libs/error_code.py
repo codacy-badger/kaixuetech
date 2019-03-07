@@ -28,7 +28,7 @@ class ServerError(APIException):
     error_code = 999
 class UpflieError(APIException):
     code = 501
-    msg = 'sorry, Picture upload failed (*￣︶￣)!'
+    msg = '上传失败(*￣︶￣)!'
     error_code = 998
 
 class ClientTypeError(APIException):
@@ -43,7 +43,7 @@ class ClientTypeError(APIException):
 
 class ParameterException(APIException):
     code = 400
-    msg = 'invalid parameter'
+    msg = '参数错误'
     error_code = 1000
 
 
@@ -53,8 +53,12 @@ class NotFound(APIException):
     error_code = 1001
 
 class RepeatException1(APIException):
-    code = 403
+    code = 400
     msg = '请勿重复添加！'
+    error_code = 1000
+class Uploadmore(APIException):
+    code = 400
+    msg = '只允许上传一个文件！'
     error_code = 1000
 
 class AuthFailed(APIException):
@@ -66,7 +70,7 @@ class AuthFailed(APIException):
 class Forbidden(APIException):
     code = 403
     error_code = 1004
-    msg = 'forbidden, not in scope'
+    msg = '禁用，你没有这个权限'
 
 
 class DuplicateGift(APIException):

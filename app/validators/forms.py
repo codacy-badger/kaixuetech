@@ -115,3 +115,20 @@ class StudentAttendForm(Form):
 
 class TeacherEndAttendForm(Form):
     attend_id= IntegerField(validators=[DataRequired()])
+
+class DurationForm (Form):
+    dat=StringField(validators=[DataRequired()])
+    subject_id = IntegerField(validators=[DataRequired()])
+    site= IntegerField(validators=[DataRequired()])
+    folder_id=IntegerField(validators=[])
+
+
+# 初始化测试集
+class InteractionStartForm(Form):
+    duration_id = IntegerField(validators=[DataRequired()])
+    duration_page = IntegerField(validators=[DataRequired()])
+    name=StringField(validators=[DataRequired()])
+
+class UploadForm(Form):
+
+    filetype = IntegerField(validators=[DataRequired()])

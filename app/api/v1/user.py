@@ -7,7 +7,7 @@ from flask import jsonify, g, request, session
 from app.libs.error_code import Success
 from app.libs.redprint import Redprint
 from app.libs.token_auth import auth
-from app.libs.upload import qiniu_upload_file, save_duration
+from app.libs.upload import qiniu_upload_file
 from app.models.user import User
 from app.validators.forms import PassForm, DetailForm
 
@@ -109,12 +109,4 @@ def change_detail():
         user.nickname = form.nickname.data
     return Success()
 
-@api.route('/data', methods=['POST'])
-@auth.login_required
-def data():
-    uid = g.user.uid
-    f = request.files['file']
-    data=qiniu_upload_file(f)
-    file=save_duration(data,uid)
-    return jsonify(file)
 

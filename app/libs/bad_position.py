@@ -26,28 +26,19 @@ def center_geolocation(geolocations):
 if __name__ == '__main__':
 
     data=[
-        "120.357,30.321532",
-        "120.356982,30.321524",
-        "120.356968,30.321544",
-        "120.356968,30.321509",
-        # "120.357004,30.321505",
-        # "120.356977,30.321544",
-        # "120.356968,30.321517",
-        # "120.356964,30.321517",
-        # "120.356968,30.321524",
-        # "120.356946,30.321517",
-        # "120.356986,30.321505",
-
-        # "120.357098,30.321552",
-        # "120.356896,30.321552",
-        # "120.356065,30.321466",
-        # "120.359623,30.319927",
-        # "120.36221,30.312269"
+        "30.315191,120.350654",
+        "30.315182,120.351571",
+        "30.315071,120.350558",
+        "30.314288,120.351754"
     ]
-    locations=[datas.split(",")for datas in data]
+    # locations=[datas.split(",")for datas in data]
     # print (center_geolocation(locations))
+    #
+    # center=center_geolocation(locations)
+    # print(center)
+    from1=';'.join(data)
+    print(from1)
+    url='http://apis.map.qq.com/ws/distance/v1/matrix/?mode=walking&from={}&to={}&key=BXZBZ-CUHCV-TNPPC-UEGVK-MH66H-BIBZQ'.format(from1,from1)
 
-    center=center_geolocation(locations)
-    print(center)
-
-
+    import requests
+    print(requests.get(url).text)

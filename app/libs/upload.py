@@ -22,24 +22,26 @@ def naming():
     import random
     import base64
     nowtime = Time.nowtime()
+
     addname = str(random.randint(1, 20)) + nowtime + str(random.randint(1, 20))
     s1 = base64.b64encode(addname.encode('utf-8'))
     return str(s1, 'utf-8')
 
 def qiniu_upload_file(source_file):
     # 生成上传 Token，可以指定过期时间等
-    old_file_name = (source_file.filename)
-    type = old_file_name.split(".")[1]
-    save_file_name=naming()+ '.' + type
-    token = q.upload_token(bucket_name, save_file_name)
-    ret, info = put_data(token, save_file_name, source_file.stream)
-    if info.status_code == 200:
-        data={'url':domain_prefix + save_file_name,"type":type,'old_name':old_file_name,}
-        return data
-    return UpflieError()
-
+    try:
+        old_file_name = (source_file.filename)
+        type = old_file_name.split(".")[-1]
+        name=naming()
+        save_file_name=name+ '.' + type
+        token = q.upload_token(bucket_name, save_file_name)
+        ret, info = put_data(token, save_file_name, source_file.stream)
+        if info.status_code == 200:
+            data={'name':ret["key"],"type":type,'old_name':old_file_name,}
+            return data
+        raise UpflieError()
+    except:
+        raise UpflieError()
 # def downloadfile(url,old_name):
 #     return url+'?attname='+old_name
 
-def save_duration(data,userid):
-    return Duration.add(data["url"],data["old_name"],userid)

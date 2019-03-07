@@ -16,6 +16,8 @@ class Studentes_Middle_Subject(Base):
     invitation = Column(String(6), comment='邀请码')
     # 签到中间表1对多关联 父亲
     attendes_middles = relationship("Attendes_Middle", back_populates="studentes_middle_subjectes", lazy='dynamic')
+
+
     # 学科的一对多 孩子#
     subject_id = Column(Integer, ForeignKey('subject.id'))
     subjects = relationship("Subject", back_populates="studentes_middle_subjectes")

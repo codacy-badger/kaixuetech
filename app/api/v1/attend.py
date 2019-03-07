@@ -107,8 +107,10 @@ def student_attend():
                              example: "112.17.240.35"
     """
     uid = g.user.uid
+
     form = StudentAttendForm().validate_for_api()
     student = Student.query.filter_by(user_id=uid).first_or_404()
+
     school_name=student.school_name
     school_code = school_to_code(school_name)
     date = Time().nowdate()
@@ -120,7 +122,7 @@ def student_attend():
         raise HadDone()
 
     attend = Attend.query.filter_by(attend_number_secret=attend_number,attend_state=1).first_or_404()
-
+    print("11")
     student_id = student.id  # 学生id
     attend_id=attend.id    #考勤表id
     attendes_middles=Attendes_Middle.query.filter_by(attend_id=attend_id,student_id=student_id).first_or_404()
@@ -135,6 +137,30 @@ def student_attend():
 @api.route('/teacher_end_attend/', methods=['POST'])
 @auth.login_required
 def teacher_end_attend():
+    """
+              老师结束签到
+              ---
+              tags:
+                - Attend
+              parameters:
+                  - in: "header"
+                    name: "Authorization"
+                    description: base64加密后的token
+                    required: true
+                  - in: "body"
+                    name: "body"
+                    description: 老师结束签到
+                    required: true
+                    schema:
+                      type: "object"
+                      properties:
+                          attend_id:
+                               type: "int"
+                               example: 1
+
+       """
     uid = g.user.uid
     form = TeacherEndAttendForm().validate_for_api()
     attend = Attend.query.filter_by(id=form.attend_id.data,attend_state=1).first_or_404()
+    atten_middle=attend.attendes_middles.filter_by(attend_position_state=1).all()
+    return Success(data=atten_middle)

@@ -2,7 +2,7 @@ from .app import Flask
 from app.api.v1 import create_blueprint_v1
 import redis
 from flask_session import Session
-
+from flasgger import Swagger
 #蓝图
 def register_blueprints(app):
     app.register_blueprint(create_blueprint_v1(), url_prefix='/v1')
@@ -14,7 +14,7 @@ def register_plugin(app):
         db.create_all()
 #api文档
 def register_swagger(app):
-    from flasgger import Swagger
+
     app.config["SWAGGER"] = {
         "title": "Swagger Basic Auth App",
         "uiversion": 2,

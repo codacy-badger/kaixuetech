@@ -45,7 +45,7 @@ class Attendes_Middle(Base):
     def up(self,attend_position,attend_ip,attend_state=1):
         self.attend_position=attend_position
         if attend_position=='0,0':
-            self.attend_position_state=0
+            self.attend_position_state=3
         else:
             self.attend_position_state = 1
         self.attend_change = self.attend_change+1
