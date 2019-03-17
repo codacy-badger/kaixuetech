@@ -24,31 +24,51 @@ class Query(BaseQuery):
             kwargs['status'] = 1
         return super(Query, self).filter_by(**kwargs)
 
+
+    #通过id获取 没找到返回404  找到返回结果
     def get_or_404(self, ident):
         rv = self.get(ident)
         if not rv:
             raise NotFound()
         return rv
-
-    def first_or_401(self):
+    # 判断参数是否正确
+    def first_or_400(self,msg=None):
         rv = self.first()
         if rv is not None:
             return rv
-        raise RepeatException1()
-    def first_or_400(self):
-        rv = self.first()
-        if rv is not None:
-            return rv
+        if msg is not None:
+            raise ParameterException(msg=msg)
         raise ParameterException()
-    def first_or_403(self):
+
+
+    # 判断有没有重复添加
+    def first_or_401(self,msg=None):
+        rv = self.first()
+        if rv is  None:
+            return True
+        if msg is not None:
+            raise RepeatException1(msg=msg)
+        raise RepeatException1()
+
+
+    # 判断有没有权限
+    def first_or_403(self,msg=None):
         rv = self.first()
         if rv is not None:
             return rv
+        if msg is not None:
+            raise Forbidden(msg=msg)
         raise Forbidden()
-    def first_or_404(self):
+
+
+    #判断有没有资源
+    def first_or_404(self,msg=None):
         rv = self.first()
         if not rv:
-            raise NotFound()
+            if msg is not None:
+                raise NotFound(msg=msg)
+            else:
+                raise NotFound()
         return rv
 
 

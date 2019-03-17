@@ -8,10 +8,7 @@ from app.libs.redprint import Redprint
 from app.libs.string_secret import add_secret, untie_secret
 from app.libs.token_auth import auth
 from app.libs.upload import qiniu_upload_file
-from app.models.duration import Duration
-from app.models.folder import Folder
-from app.models.subject import Subject
-from app.validators.forms import DurationForm, UploadForm
+
 import json
 api = Redprint('duration')
 
@@ -36,7 +33,11 @@ def upload(site):
                  description: "file to upload"
                  required: false
                  type: "file"
-
+               - in: "formData"
+                 name: "file"
+                 description: "file to upload"
+                 required: false
+                 type: "file"
                - name: "site"
                  in: "path"
                  description: 属性
@@ -69,47 +70,6 @@ def upload(site):
         password = json.dumps(data)
         str_da=add_secret(password)
         return Success(data=str_da)
-    raise ParameterException()
 
-@api.route('teacher', methods=['POST'])
-@auth.login_required
-def add():
-    """
-           老师添加资料
-           ---
-           tags:
-             - Upload
-           parameters:
-               - in: "header"
-                 name: "Authorization"
-                 description: base64加密后的token
-                 required: true
-               - in: "body"
-                 name: "body"
-                 description: 老师添加资料
-                 required: true
-                 schema:
-                   type: "object"
-                   properties:
-                       dat:
-                           type: "string"
-                           example: "山东师范大学"
-                       subject_id:
-                           type: "int"
-                           example: 1
-                       folder_id:
-                           type: "int"
-                           example: 0
-                       site:
-                           type: "int"
-                           example: 0
-        """
-    uid = g.user.uid
-    form = DurationForm().validate_for_api()
-    Subject.query.filter_by(id=form.subject_id.data,user_id=uid).first_or_400()
-    if form.folder_id.data !=0:
-        Folder.query.filter_by(id=form.folder_id.data, user_id=uid).first_or_400()
-    datas=(json.loads(untie_secret(form.dat.data)))
-    for data in datas:
-        Duration.add(data["name"], data["old_name"], uid, form.subject_id.data, data["type"],form.site.data,form.folder_id.data)
-    return Success(msg="上传成功！")
+    raise ParameterException()
+   # datas=(json.loads(untie_secret(form.dat.data)))

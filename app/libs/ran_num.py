@@ -27,21 +27,35 @@ def onechar():
         Letter = Letter + 1
     return chr(Letter)
 
+def addsecret(str1):
+    hl = hashlib.md5()
+    hl.update(str1.encode(encoding='utf-8'))
+    return hl.hexdigest()
 def random_code():
     code1=onechar()+''.join(list(map(code, [ 0, 0, 0, 0, 0])))
-    hl = hashlib.md5()
-    hl.update(code1.encode(encoding='utf-8'))
-    end=r.hset('user_list', hl.hexdigest(), hl.hexdigest())
+    add=addsecret(code1)
+    end=r.hset('subject_list',add,add)
     if end==1:
         return code1
     else:
         random_code()
-
-def del_random_code(code1):
-    hl = hashlib.md5()
-    hl.update(code1.encode(encoding='utf-8'))
-    end = r.hdel('user_list', hl.hexdigest())
-    return end
+def code_update(code,id):
+    add = addsecret(code)
+    r.hdel("subject_list",add)
+    end = r.hset('subject_list', add, id)
+    if end==1:
+        return code
+    else:
+        random_code()
+def get_code_id(code):
+    add = addsecret(code)
+    data=r.hget("subject_list", add)
+    return data
+# def del_random_code(code1):
+#     hl = hashlib.md5()
+#     hl.update(code1.encode(encoding='utf-8'))
+#     end = r.hdel('user_list', hl.hexdigest())
+#     return end
 
 
 def num_code(i):

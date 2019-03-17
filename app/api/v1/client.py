@@ -32,6 +32,9 @@ def create_client():
                         secret:
                             type: "string"
                             example: "123456"
+                        secret2:
+                            type: "string"
+                            example: "123456"
                         type:
                             type: "int"
                             example: 101
@@ -43,15 +46,15 @@ def create_client():
         ClientTypeEnum.USER_MOBILE: __register_user_by_phone
     }
 
-    promise[form.type.data]()
+    user=promise[form.type.data]()
+    return Success(data=user)
 
-    return Success()
 
 
 def __register_user_by_phone():
-
     form = UserPhoneForm().validate_for_api()
-    print(form)
-    print("======================")
-    User.register_by_phone(form.account.data,
+
+    user=User.register_by_phone(form.account.data,
                            form.secret.data)
+    return user
+

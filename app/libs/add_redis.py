@@ -20,20 +20,20 @@ r = redis.StrictRedis(connection_pool=pool)
 #     elif schoolcode<1000:
 #         schoolcode="0"+str(schoolcode)
 #
-#     data={
-#         "schoolcode":schoolcode,
-#         "schoolname":schoolname,
-#         "province":province,
-#         "show":0
-#     }
+#     # data={
+#     #     "schoolcode":schoolcode,
+#     #     "schoolname":schoolname,
+#     #     "province":province,
+#     #     "show":0
+#     # }
 #
-#     r.hset('school_list', schoolcode, data)
-
-
-
+#     r.hset('school_province_list', schoolcode, province)
+# #
+# #
+# #
 # import pandas as pd
 # data=pd.read_csv("C:/Users/admin/Desktop/school.csv")
-# print(
-#     data.head()
-# )
+# # print(
+# #     data.head()
+# # )
 # list(map(addschool,data["schoolid"],data["schoolname"],data["province"]))

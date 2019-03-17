@@ -13,6 +13,7 @@ class Redprint:
     def register(self, bp, url_prefix=None):
         if url_prefix is None:
             url_prefix = '/' + self.name
+
         for f, rule, options in self.mound:
             endpoint = self.name + '+' + \
                        options.pop("endpoint", f.__name__)

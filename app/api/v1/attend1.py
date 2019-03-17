@@ -17,14 +17,14 @@ from app.models.studentes_middle_subject import Studentes_Middle_Subject
 from app.models.subject import Subject
 from app.validators.forms import AttendForm, StudentAttendForm, TeacherEndAttendForm
 
-api = Redprint('attend')
+api = Redprint('attend1')
 
 
 @api.route('', methods=['POST'])
 @auth.login_required
 def add():
     """
-           老师添加考勤
+           老师创建考勤
            ---
            tags:
              - Attend
@@ -35,7 +35,7 @@ def add():
                  required: true
                - in: "body"
                  name: "body"
-                 description: 老师添加考勤
+                 description: 老师创建考勤
                  required: true
                  schema:
                    type: "object"

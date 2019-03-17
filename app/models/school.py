@@ -17,8 +17,18 @@ class School(Base):
 
     @orm.reconstructor
     def __init__(self):
-        self.fields = ['schoolcode', 'name', 'province', 'show']
+        self.fields = ['id','schoolcode', 'name', 'province', 'show']
 
+    def to_json(self):
+        json_data = {
+            "id": self.id,
+            "value": self.schoolcode,
+            "label": self.name,
+            "province": self.province,
+            "show": self.show
+        }
+
+        return json_data
     @staticmethod
     def add(schoolcode, name, province, show=0):
         with db.auto_commit():

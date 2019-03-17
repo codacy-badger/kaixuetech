@@ -36,7 +36,6 @@ def get_token():
       ---
       tags:
         - Token
-
       parameters:
         - in: "body"
           name: "body"

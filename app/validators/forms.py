@@ -1,7 +1,7 @@
 
-from wtforms import StringField, IntegerField,FloatField
-from wtforms.validators import DataRequired, length, Email, Regexp
-from wtforms import ValidationError
+from wtforms import StringField, IntegerField, FloatField, Field, SelectField,ValidationError, FieldList, FormField
+from wtforms.validators import DataRequired, length, Email, Regexp, EqualTo
+
 from app.libs.enums import ClientTypeEnum
 from app.models.user import User
 from app.validators.base import BaseForm as Form
@@ -32,6 +32,11 @@ class UserEmailForm(ClientForm):
         DataRequired(),
         # password can only include letters , numbers and "_"
         Regexp(r'^[A-Za-z0-9_*&$#@]{6,22}$')
+    ])
+    secret2=StringField(validators=[
+        DataRequired(),
+        # password can only include letters , numbers and "_"
+        Regexp(r'^[A-Za-z0-9_*&$#@]{6,22}$'),EqualTo("secret")
     ])
     nickname = StringField(validators=[DataRequired(),
                                        length(min=2, max=22)])
@@ -129,6 +134,27 @@ class InteractionStartForm(Form):
     duration_page = IntegerField(validators=[DataRequired()])
     name=StringField(validators=[DataRequired()])
 
+class CourseForm(Form):
+    duration_id= IntegerField(validators=[DataRequired()])
 class UploadForm(Form):
-
     filetype = IntegerField(validators=[DataRequired()])
+class PaperForm(Form):
+    course_info_id = IntegerField(validators=[DataRequired()])
+    ware_page = IntegerField(validators=[DataRequired()])
+
+class CosIdForm(Form):
+    cos_id = IntegerField(validators=[DataRequired()])
+
+
+class OptionForm(Form):
+    order_num= IntegerField(validators=[DataRequired()])
+    opt_cont=StringField(validators=[DataRequired()])
+
+
+class QuestionForm(Form):
+    genre=IntegerField(validators=[DataRequired()])
+    questiontext=StringField(validators=[DataRequired()])
+    answer=StringField(validators=[])
+    order_num=IntegerField(validators=[DataRequired()])
+    paper_id=IntegerField(validators=[DataRequired()])
+    option=FieldList(FloatField())

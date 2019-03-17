@@ -22,7 +22,6 @@ def naming():
     import random
     import base64
     nowtime = Time.nowtime()
-
     addname = str(random.randint(1, 20)) + nowtime + str(random.randint(1, 20))
     s1 = base64.b64encode(addname.encode('utf-8'))
     return str(s1, 'utf-8')
@@ -37,11 +36,9 @@ def qiniu_upload_file(source_file):
         token = q.upload_token(bucket_name, save_file_name)
         ret, info = put_data(token, save_file_name, source_file.stream)
         if info.status_code == 200:
-            data={'name':ret["key"],"type":type,'old_name':old_file_name,}
+            data={'name':'http://upload.kaixuetech.com/' +ret["key"],"type":type,'old_name':old_file_name,}
             return data
         raise UpflieError()
     except:
         raise UpflieError()
-# def downloadfile(url,old_name):
-#     return url+'?attname='+old_name
 

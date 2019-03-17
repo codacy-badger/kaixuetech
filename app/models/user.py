@@ -20,10 +20,9 @@ class User(Base):
     wechat_open_id= Column(String(255), unique=True, comment='微信小程序唯一标识')
     _password = Column('password', String(100), comment='密码')
 
-
     @orm.reconstructor
     def __init__(self):
-        self.fields = ['id', 'nickname', 'auth','wechat_open_id','phone']
+        self.fields = ['id','avatar_url', 'nickname', 'auth','wechat_open_id','phone','create_time']
     @property
     def password(self):
         return self._password
@@ -51,6 +50,7 @@ class User(Base):
             user.phone = account
             user.password = secret
             db.session.add(user)
+            return user
 
     def check_password(self, raw):
         if not self._password:
