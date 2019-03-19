@@ -13,7 +13,7 @@ from app.validators.adminforms import DelSchoolForm, DelAdminForm
 
 api = Redprint('admin_school')
 
-#获取老师列表
+#获取学校
 @api.route('', methods=['post'])
 @auth.login_required
 def get_school():
@@ -50,6 +50,83 @@ def get_school():
     data =get_method(School,like_list=['id','schoolcode', 'name', 'province'])
     return Success(data=data)
 
+@api.route('/op', methods=['post'])
+@auth.login_required
+def get_opschool():
+    """
+        获取开放学校
+        ---
+        tags:
+          - AdminSchool
+        parameters:
+            - in: "header"
+              name: "Authorization"
+              description: base64加密后的token
+              required: true
+            - in: "body"
+              name: "body"
+              description: 获取开放学校
+              required: true
+              schema:
+                type: "object"
+                properties:
+                    page:
+                       type: "int"
+                       example: 1
+                    limit:
+                       type: "int"
+                       example: 10
+                    sort:
+                       type: "string"
+                       example: "-id"
+                    likename:
+                       type: "string"
+                       example: "12"
+    """
+    filt = {
+        School.show == True
+    }
+    data =get_method(School,like_list=['id','schoolcode', 'name', 'province'],filt=filt)
+    return Success(data=data)
+
+@api.route('/cl', methods=['post'])
+@auth.login_required
+def get_clschool():
+    """
+        获取未开放学校
+        ---
+        tags:
+          - AdminSchool
+        parameters:
+            - in: "header"
+              name: "Authorization"
+              description: base64加密后的token
+              required: true
+            - in: "body"
+              name: "body"
+              description: 获取未开放学校
+              required: true
+              schema:
+                type: "object"
+                properties:
+                    page:
+                       type: "int"
+                       example: 1
+                    limit:
+                       type: "int"
+                       example: 10
+                    sort:
+                       type: "string"
+                       example: "-id"
+                    likename:
+                       type: "string"
+                       example: "12"
+    """
+    filt = {
+        School.show == False
+    }
+    data =get_method(School,like_list=['id','schoolcode', 'name', 'province'],filt=filt)
+    return Success(data=data)
 #关闭服务学校
 @api.route('/show', methods=['DELETE'])
 @auth.login_required
@@ -102,5 +179,6 @@ def group_school():
     """
 
     a=getschool()
-
     return Success(data=a)
+
+#查找学校

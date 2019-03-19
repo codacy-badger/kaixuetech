@@ -8,7 +8,9 @@ class Time():
         import time
         millis = int(round(time.time() * 1000))
         return str(millis)
-
+    @staticmethod
+    def now():
+        return datetime.datetime.now()
     @staticmethod
     def nowdate():
         today = datetime.date.today()

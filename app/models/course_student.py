@@ -12,6 +12,7 @@ class CourseStudent(Base):
     paper_id= Column(Integer, comment='考卷id',index=True)
     answer=Column(Text, comment='考生答案')
     end_time=Column(DateTime, comment='完成时间')
+
     @orm.reconstructor
     def __init__(self):
         self.fields = ['id', 'student_id', 'paper_id','answer']

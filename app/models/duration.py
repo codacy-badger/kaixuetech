@@ -17,11 +17,11 @@ class Duration(Base):
     subject_id=Column(Integer,nullable=False, comment='课堂id')
     is_folder=Column(SmallInteger,default=0, comment='是否有文件夹')
     folder_id=Column(Integer,  comment='文件夹id')
-    site=Column(SmallInteger, comment='分类 1 上课课件 2 附件')
+    site=Column(SmallInteger, comment='分类 1 上课课件 2 资料')
 
     @orm.reconstructor
     def __init__(self):
-        self.fields = ['id','name','old_name']
+        self.fields = ['id','name','old_name','type','name','updated_time','create_time']
 
     @staticmethod
     def add(name,old_name,userid,subject_id,type,site,folder_id=0):
@@ -34,8 +34,6 @@ class Duration(Base):
             duration.type = type
             duration.site = site
             duration.folder_id = folder_id
-
-
             if folder_id>0:
                 duration.is_folder = 1
             db.session.add(duration)

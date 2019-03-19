@@ -23,7 +23,7 @@ class Scope:
 class AdminScope(Scope):
     # allow_api = ['v1.user+super_get_user',
     #              'v1.user+super_delete_user']
-    allow_module = ['v1.admin_user','v1.admin_libs','v1.admin_class','v1.admin_school','v1.user','v1.student','v1.subject','v1.section','v1.teacher','v1.stusub',
+    allow_module = ['v1.admin_attend','v1.admin_files','v1.admin_user','v1.admin_libs','v1.admin_class','v1.admin_school','v1.user','v1.student','v1.subject','v1.section','v1.teacher','v1.stusub',
                     'v1.attend','v1.attend_student','v1.duration','v1.interaction']
     allow_auth = ['student','teacher']
     def __init__(self):

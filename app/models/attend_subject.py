@@ -13,15 +13,17 @@ class AttendSubject(Base):
     attend_id = Column(Integer, comment='考勤id', index=True)
     subject_id = Column(Integer, comment='班级id', index=True)
     teacher_id= Column(Integer, comment='老师id', index=True)
+    user_id= Column(Integer, comment='老师用户id', index=True)
     @orm.reconstructor
     def __init__(self):
         self.fields = ['id', 'attend_id',  'subject_id']
     @staticmethod
-    def add(attend_id, subject_id,teacher_id):
+    def add(attend_id, subject_id,teacher_id,uid):
         with db.auto_commit():
             attend_subject = AttendSubject()
             attend_subject.attend_id = attend_id
             attend_subject.subject_id = subject_id
             attend_subject.teacher_id = teacher_id
+            attend_subject.user_id = uid
             db.session.add(attend_subject)
             return attend_subject

@@ -189,8 +189,6 @@ def del_admin_user():
     """
     form = DelAdminForm().validate_for_api()
 
-    # uid = g.user.uid
-    # print(g.user.scope)
     for id in form.duid.data:
         user=User.query.filter_by(id=id).first_or_404()
         if user.auth==11:
@@ -234,4 +232,4 @@ def add():
     user.auth=form.au.data
     return Success("管理添加成功！")
 
-# 学校管理
+

@@ -33,5 +33,11 @@ class PageForm(Form):
     page=IntegerField()
     limit=IntegerField()
     sort= StringField()
+class onePageForm(PageForm):
+    duid=IntegerField()
+
+class onedataForm(PageForm):
+    site=IntegerField()
+
 class SubjectForm(Form):
     name = StringField(validators=[DataRequired()])

@@ -50,6 +50,9 @@ def change_school():
                 data["children"].append(school.to_json())
                 schools.remove(school)
         datas.append(data)
+
+
+
     r.hdel("school", "sdsdsd#%#$%")
     a = r.hset("school","sdsdsd#%#$%", datas)
     return  a

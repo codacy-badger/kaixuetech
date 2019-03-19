@@ -17,15 +17,15 @@ class AttendInfo(Base):
     attend_name = Column(String(255), comment='考勤名称')
     attend_number_secret=Column(String(14), comment='学校编号+年月日+4位随机码',index=True)
     attend_number = Column(String(4), comment='4位随机码')
-    attend_state=Column(SmallInteger,default="1",comment='0:未开放，1：签到中，2：签到结束')
+    attend_state=Column(SmallInteger,default=1,comment='0:未开放，1：签到中，2：签到结束')
     start_time=Column(DateTime,default=datetime.now, comment='发起签到的时间')
     end_time=Column(DateTime, comment='结束签到的时间')
     attend_position = Column(String(255), default='0', comment='考勤坐标116.414617,39.943485')
-    num_students=Column(Integer, comment='学生人数')
-
+    num_students=Column(Integer,default=0, comment='学生人数')
+    attend_school_id=Column(String(4), comment='学校编号')
     @orm.reconstructor
     def __init__(self):
-        self.fields = ['id', 'attend_name',  'attend_number', 'attend_state']
+        self.fields = ['id', 'attend_name',  'attend_number', 'attend_state','start_time','end_time']
 
     @staticmethod
     def add(attend_name, attend_number):
@@ -34,6 +34,6 @@ class AttendInfo(Base):
             attend_info.attend_name = attend_name
             attend_info.attend_number = attend_number[-4:]
             attend_info.attend_number_secret = attend_number
-
+            attend_info.attend_school_id=attend_number[:4]
             db.session.add(attend_info)
             return attend_info

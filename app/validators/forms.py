@@ -117,7 +117,7 @@ class StudentAttendForm(Form):
     code=StringField(validators=[DataRequired() ,Regexp(r'^[0-9]{4}$')])
     attend_position=StringField(validators=[DataRequired()])
     ip=StringField(validators=[DataRequired(),Regexp(r'(2(5[0-5]{1}|[0-4]\d{1})|[0-1]?\d{1,2})(\.(2(5[0-5]{1}|[0-4]\d{1})|[0-1]?\d{1,2})){3}')])
-
+    scl_name=StringField(validators=[DataRequired()])
 class TeacherEndAttendForm(Form):
     attend_id= IntegerField(validators=[DataRequired()])
 
@@ -126,6 +126,9 @@ class DurationForm (Form):
     subject_id = IntegerField(validators=[DataRequired()])
     site= IntegerField(validators=[DataRequired()])
     folder_id=IntegerField(validators=[])
+class TestForm(Form):
+    sec_id= StringField(validators=[DataRequired()])
+    subject_id=IntegerField(validators=[DataRequired()])
 
 
 # 初始化测试集
@@ -134,8 +137,10 @@ class InteractionStartForm(Form):
     duration_page = IntegerField(validators=[DataRequired()])
     name=StringField(validators=[DataRequired()])
 
-class CourseForm(Form):
-    duration_id= IntegerField(validators=[DataRequired()])
+class TeCourseForm(Form):
+    chi_id= IntegerField(validators=[DataRequired()])
+    kin= IntegerField(validators=[DataRequired()])
+
 class UploadForm(Form):
     filetype = IntegerField(validators=[DataRequired()])
 class PaperForm(Form):
@@ -150,11 +155,20 @@ class OptionForm(Form):
     order_num= IntegerField(validators=[DataRequired()])
     opt_cont=StringField(validators=[DataRequired()])
 
+class GetQuesForm(Form):
+    id = IntegerField(validators=[DataRequired()])
 
 class QuestionForm(Form):
+    course_id=IntegerField(validators=[DataRequired()])
+    page=IntegerField(validators=[DataRequired()])
     genre=IntegerField(validators=[DataRequired()])
     questiontext=StringField(validators=[DataRequired()])
     answer=StringField(validators=[])
-    order_num=IntegerField(validators=[DataRequired()])
-    paper_id=IntegerField(validators=[DataRequired()])
     option=FieldList(FloatField())
+class AnswerForm(Form):
+    paper_id=IntegerField(validators=[DataRequired()])
+    answer = FieldList(FloatField())
+
+class FileNameForm(invitationForm):
+    id=IntegerField(validators=[DataRequired()])
+    name=StringField(validators=[DataRequired()])

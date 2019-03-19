@@ -20,7 +20,7 @@ class CourseQuestion(Base):
 
     @orm.reconstructor
     def __init__(self):
-        self.fields = ['id', 'genre','answer']
+        self.fields = ['id', 'genre','answer','questiontext','option']
     @staticmethod
     def add(genre,questiontext,answer,option,detail=None,score=1):
         with db.auto_commit():

@@ -14,6 +14,7 @@ class AttendStudent(Base):
     id = Column(Integer, primary_key=True, comment='学生签到id')
     attend_id = Column(Integer,  comment='考勤id',index=True)
     student_id = Column(Integer, comment='学生id',index=True)
+    user_id= Column(Integer, comment='学生的用户id', index=True)
     attend_state = Column(SmallInteger, default=0, comment='0:未签到，1：出勤，2：旷课，3：请假，4：迟到，5：早退，6：事假，7：病假，8：公假')
     attend_position = Column(String(255), default='0', comment='考勤坐标116.414617,39.943485')
     attend_ipattend_ip = Column(String(255), default='0', comment='考勤ip 112.17.240.35')
@@ -23,13 +24,14 @@ class AttendStudent(Base):
 
     @orm.reconstructor
     def __init__(self):
-        self.fields = ['id', 'attend_id', 'attend_state', 'attend_position', 'attend_change', 'attend_time']
+        self.fields = ['id', 'attend_id', 'attend_state', 'attend_position', 'attend_change', 'attend_time','attend_position_state']
 
     @staticmethod
-    def add(attend_id, student_id):
+    def add(attend_id, student_id,user_id):
         with db.auto_commit():
             attend_student = AttendStudent()
             attend_student.attend_id = attend_id
             attend_student.student_id = student_id
+            attend_student.user_id=user_id
             db.session.add(attend_student)
             return attend_student

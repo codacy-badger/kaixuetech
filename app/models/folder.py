@@ -12,7 +12,7 @@ class Folder(Base):
     id = Column(Integer, primary_key=True, comment='文件夹id')
     name = Column(String(255), comment='文件夹的名称')
     userid=Column(Integer, ForeignKey('user.id'),nullable=False, comment='存储用户id')
-    subject_id=Column(Integer, ForeignKey('subject.id'),nullable=False, comment='课堂id')
+    subject_id=Column(Integer,nullable=False, comment='课堂id')
 
     def __init__(self):
         self.fields = ['id','name','subject_id']

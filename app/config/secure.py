@@ -2,7 +2,7 @@
 
 SERVER_PORT=8000
 DIALECT = 'mysql'
-DRIVER = 'pymysql'
+DRIVER = 'mysqlconnector'
 USERNAME = 'root'
 PASSWORD = '19961121'
 HOST = '127.0.0.1'

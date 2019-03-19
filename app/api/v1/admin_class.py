@@ -6,19 +6,22 @@ from flask import jsonify, request
 from sqlalchemy import desc
 
 from app.libs.error_code import Success, Forbidden, DeleteSuccess, ParameterException
-from app.libs.get_method import get_method
+from app.libs.get_method import get_method, get_join_method
 from app.libs.redis_method import code_to_school, code_to_province
 from app.libs.redprint import Redprint
 from app.libs.string_secret import add_secret, untie_secret
 from app.libs.token_auth import auth
 from app.libs.upload import qiniu_upload_file
 from app.models.class_student import ClassStudent
+from app.models.class_study import ClassStudy
+from app.models.class_subject import ClassSubject
+from app.models.class_teach import ClassTeach
 from app.models.class_teacher import ClassTeacher
 
 from app.models.user import User
 from app.validators.adminforms import DelAdminForm, AdminAuthForm, UserPutForm, ChPassForm, SchoolForm, TeDetailForm, \
     StDetailForm
-from app.validators.classforms import PageForm
+from app.validators.classforms import PageForm, onePageForm
 import json
 api = Redprint('admin_class')
 #获取老师列表
@@ -55,7 +58,7 @@ def get_teacher():
                        type: "string"
                        example: "12"
     """
-    data =get_method(ClassTeacher,like_list=['name','id'])
+    data =get_method(ClassTeacher,like_list=['name','id','school_name'])
     return Success(data=data)
 
 #学生和老师选择学校
@@ -104,7 +107,45 @@ def up_teacher():
     data = Big().create(duid, school_id)
     return Success(data=data)
 
-
+#获取未审核学生信息
+@api.route('/stauth', methods=['post'])
+@auth.login_required
+def get_au_student():
+    """
+        获取未审核学生信息
+        ---
+        tags:
+          - AdminClass
+        parameters:
+            - in: "header"
+              name: "Authorization"
+              description: base64加密后的token
+              required: true
+            - in: "body"
+              name: "body"
+              description: 获取未审核学生信息
+              required: true
+              schema:
+                type: "object"
+                properties:
+                    page:
+                       type: "int"
+                       example: 1
+                    limit:
+                       type: "int"
+                       example: 10
+                    sort:
+                       type: "string"
+                       example: "-id"
+                    likename:
+                       type: "string"
+                       example: "12"
+    """
+    filt={
+        ClassStudent.isauth==2
+    }
+    data =get_method(ClassStudent,like_list=['name','id', 'sno', 'school_name', 'major', 'grade', 'classno'],filt=filt)
+    return Success(data=data)
 
 #获取学生列表
 @api.route('/student', methods=['post'])
@@ -140,8 +181,43 @@ def get_student():
                        type: "string"
                        example: "12"
     """
-    data =get_method(ClassStudent,like_list=['name','id'])
+    data =get_method(ClassStudent,like_list=['name','id', 'sno', 'school_name', 'major', 'grade', 'classno'])
     return Success(data=data)
+
+# 获取单个学生
+@api.route('/student/<int:duid>/<int:au>', methods=['GET'])
+@auth.login_required
+def onestudent(duid,au):
+    """
+               详情接口
+               ---
+               tags:
+                 - AdminClass
+               parameters:
+                   - in: "header"
+                     name: "Authorization"
+                     description: base64加密后的token
+                     required: true
+                   - name: "duid"
+                     in: "path"
+                     description: "学生/老师id"
+                     required: true
+                     type: "int"
+                   - name: "au"
+                     in: "path"
+                     description: "权限 1为学生 2 为老师"
+                     required: true
+                     type: "int"
+
+           """
+    if au==2:
+        Big = ClassTeacher
+    elif au==1:
+        Big = ClassStudent
+    else:
+        raise ParameterException()
+    big=Big.query.join(User,Big.user_id==User.id).filter(Big.id==duid).add_entity(User).first_or_404()
+    return Success(data=big)
 @api.route('/province/<string:code>', methods=['get'])
 @auth.login_required
 def province(code):
@@ -249,7 +325,6 @@ def tedetail():
     """
 
     form = TeDetailForm().validate_for_api()
-
     duid=form.duid.data
     head_url = form.head_url.data
     if head_url is not None and head_url  is not '':
@@ -322,5 +397,135 @@ def stdetail():
     student.admin(auth_url,sno,school_id,name,major,grade,classno)
     return jsonify(student)
 
+#获取班级列表
+@api.route('/tesubject', methods=['post'])
+@auth.login_required
+def get_tesubject():
+    """
+        老师获取班级列表
+        ---
+        tags:
+          - AdminClass
+        parameters:
+            - in: "header"
+              name: "Authorization"
+              description: base64加密后的token
+              required: true
+            - in: "body"
+              name: "body"
+              description: 老师获取班级列表
+              required: true
+              schema:
+                type: "object"
+                properties:
+                    page:
+                       type: "int"
+                       example: 1
+                    limit:
+                       type: "int"
+                       example: 10
+                    sort:
+                       type: "string"
+                       example: "-id"
+                    likename:
+                       type: "string"
+                       example: "12"
+                    duid:
+                       type: "int"
+                       example: 1
+    """
+    form = onePageForm().validate_for_api()
+    que=ClassSubject.query.join(ClassTeach,ClassTeach.subject_id==ClassSubject.id)
+    Big=ClassSubject
+    filt={
+        ClassTeach.teacher_id==form.duid.data
+    }
+    data =get_join_method(Big,que,form,like_list=['id', 'name', 'invitation', 'abstract','sub_status'],filt=filt)
+    return Success(data=data)
+
+#获取老师列表
+@api.route('/stsubject', methods=['post'])
+@auth.login_required
+def get_stsubject():
+    """
+        获取学生班级
+        ---
+        tags:
+          - AdminClass
+        parameters:
+            - in: "header"
+              name: "Authorization"
+              description: base64加密后的token
+              required: true
+            - in: "body"
+              name: "body"
+              description: 获取学生班级
+              required: true
+              schema:
+                type: "object"
+                properties:
+                    page:
+                       type: "int"
+                       example: 1
+                    limit:
+                       type: "int"
+                       example: 10
+                    sort:
+                       type: "string"
+                       example: "-id"
+                    likename:
+                       type: "string"
+                       example: "12"
+                    duid:
+                       type: "int"
+                       example: 1
+    """
+    form = onePageForm().validate_for_api()
+    que = ClassSubject.query.join(ClassStudy, ClassStudy.subject_id == ClassSubject.id)
+    Big = ClassSubject
+    filt = {
+        ClassTeach.teacher_id == form.duid.data
+    }
+    data = get_join_method(Big, que, form, like_list=['id', 'name', 'invitation', 'abstract','sub_status'], filt=filt)
+    return Success(data=data)
+
+
+#获取全部班级
+@api.route('/subjectall', methods=['post'])
+@auth.login_required
+def get_subjectall():
+    """
+        获取全部班级
+        ---
+        tags:
+          - AdminClass
+        parameters:
+            - in: "header"
+              name: "Authorization"
+              description: base64加密后的token
+              required: true
+            - in: "body"
+              name: "body"
+              description: 获取全部班级
+              required: true
+              schema:
+                type: "object"
+                properties:
+                    page:
+                       type: "int"
+                       example: 1
+                    limit:
+                       type: "int"
+                       example: 10
+                    sort:
+                       type: "string"
+                       example: "-id"
+                    likename:
+                       type: "string"
+                       example: "12"
+    """
+
+    data =get_method(ClassSubject,like_list=['id', 'name', 'invitation', 'abstract','sub_status'])
+    return Success(data=data)
 
 
