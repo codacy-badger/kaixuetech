@@ -4,6 +4,8 @@
 # @Email   : 903165495@qq.com
 
 from flask import jsonify, g, request, session
+
+
 from app.libs.error_code import Success
 from app.libs.redprint import Redprint
 from app.libs.token_auth import auth
@@ -12,8 +14,6 @@ from app.models.user import User
 from app.validators.forms import PassForm, DetailForm
 
 api = Redprint('user')
-
-
 
 @api.route('', methods=['GET'])
 @auth.login_required

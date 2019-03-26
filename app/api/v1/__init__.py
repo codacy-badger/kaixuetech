@@ -1,7 +1,7 @@
 from flask import Blueprint
 from app.api.v1 import user, client, token, \
      wechat, attend,duration,interaction,\
-    admin_user,admin_class,admin_school,admin_libs,admin_attend,admin_files
+    admin_user,admin_class,admin_school,admin_libs,admin_attend,admin_files,admin_interact
 from app.api.v1 import classs
 from app.api.v1 import interact
 def create_blueprint_v1():
@@ -13,7 +13,7 @@ def create_blueprint_v1():
     admin_attend.api.register(bp_v1)
     # wechat.api.register(bp_v1)
     admin_files.api.register(bp_v1)
-    # stusub.api.register(bp_v1)
+    admin_interact.api.register(bp_v1)
     attend.api.register(bp_v1)
     duration.api.register(bp_v1)
     # interaction.api.register(bp_v1)

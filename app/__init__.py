@@ -1,11 +1,14 @@
 
 from flask_cache import Cache
+
+
+
 from .app import Flask
 from app.api.v1 import create_blueprint_v1
 import redis
 from flask_session import Session
 from flasgger import Swagger
-from celery import Celery
+
 #蓝图
 def register_blueprints(app):
     app.register_blueprint(create_blueprint_v1(), url_prefix='/v1')
@@ -55,8 +58,15 @@ def register_cache(app):
 def register_cors(app):
     from flask_cors import CORS
     CORS(app, supports_credentials=True)
-from app.celery import celery
+
+
+# celery = make_celery()
+from app.celery.main import celery
 def register_celery(app):
+    app.config.update(
+        CELERY_BROKER_URL='redis://localhost:6379',
+        CELERY_RESULT_BACKEND='redis://localhost:6379'
+    )
     celery.init_app(app=app)
 def create_app():
     app = Flask(__name__)

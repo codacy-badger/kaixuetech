@@ -19,7 +19,7 @@ api = Redprint('admin_files')
 @auth.login_required
 def get_classfile():
     """
-        获取签到表
+        获取文件
         ---
         tags:
           - AdminFiles
@@ -30,7 +30,7 @@ def get_classfile():
               required: true
             - in: "body"
               name: "body"
-              description: 获取签到表
+              description: 获取文件
               required: true
               schema:
                 type: "object"

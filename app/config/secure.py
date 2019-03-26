@@ -17,9 +17,10 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 SECRET_KEY = 'sdsdsrs2fd3dfdgcvcdversesees'  #盐  salt  123
 
 UPLOAD_FOLDER='http://127.0.0.1:5000/'
-
-CELERY_BROKER_URL='redis://[ihaveabigdream]@47.110.251.32:6379/0'
-CELERY_RESULT_BACKEND='redis://[ihaveabigdream]@47.110.251.32:6379/0'
+CELERY_BROKER_URL='redis://127.0.0.1:6379/1'
+CELERY_RESULT_BACKEND='redis://127.0.0.1:6379/2'
+# CELERY_BROKER_URL='redis://[ihaveabigdream]@47.110.251.32:6379/0'
+# CELERY_RESULT_BACKEND='redis://[ihaveabigdream]@47.110.251.32:6379/0'
 # CACHE_TYPE= 'redis',
 # CACHE_REDIS_HOST= '47.110.251.32',
 # CACHE_REDIS_PORT=6379,

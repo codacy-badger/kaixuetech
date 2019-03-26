@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
-# @Time    : 2019/3/15 15:10
+# @Time    : 2019/3/20 11:12
 # @Author  : 昨夜
 # @Email   : 903165495@qq.com
-from app.celery import celery
-
+from  app.celery.main import celery
 
 @celery.task()
-def subje_add_student(x,y):
-    print("1")
+def add(x,y):
     return x + y

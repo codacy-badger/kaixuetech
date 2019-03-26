@@ -21,6 +21,33 @@ class CourseQuestion(Base):
     @orm.reconstructor
     def __init__(self):
         self.fields = ['id', 'genre','answer','questiontext','option']
+
+    def jsonstr(self):
+        import json
+        option = json.loads(self.option)
+        jsonstr = {
+            "id": self.id,
+            "genre": self.genre,
+            "option":option,
+            "questiontext": self.questiontext,
+        }
+        return jsonstr
+
+    def adminjsonstr(self):
+        import json
+        option = json.loads(self.option)
+        jsonstr = {
+            "id": self.id,
+            "genre": self.genre,
+            "option":option,
+            "questiontext": self.questiontext,
+            "answer": self.answer,
+            "score": self.score,
+            "detail": self.detail,
+
+        }
+        return jsonstr
+
     @staticmethod
     def add(genre,questiontext,answer,option,detail=None,score=1):
         with db.auto_commit():

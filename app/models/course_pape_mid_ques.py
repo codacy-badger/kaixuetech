@@ -18,7 +18,7 @@ class PaperMidQuestion(Base):
     __mapper_args__ = {"order_by": order_num}
     @orm.reconstructor
     def __init__(self):
-        self.fields = ['id','order_num']
+        self.fields = ['id','order_num','question_id']
 
     @staticmethod
     def add(paper_id,question,order_num,user_id):

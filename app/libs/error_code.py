@@ -50,7 +50,7 @@ class ParameterException(APIException):
 
 class NotFound(APIException):
     code = 404
-    msg = 'the resource are not found O__O...'
+    msg = '这个资源不见了 ！O__O...'
     error_code = 1001
 
 class RepeatException1(APIException):

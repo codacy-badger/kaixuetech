@@ -11,7 +11,7 @@ from app.libs.redis_method import code_to_school, code_to_province
 from app.libs.redprint import Redprint
 from app.libs.string_secret import add_secret, untie_secret
 from app.libs.token_auth import auth
-from app.libs.upload import qiniu_upload_file
+from app.libs.upload import qiniu_upload_file, aliyun_get_url
 from app.models.class_student import ClassStudent
 from app.models.class_study import ClassStudy
 from app.models.class_subject import ClassSubject

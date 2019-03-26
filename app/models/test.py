@@ -9,7 +9,7 @@ class GoodsDesc(object):
     _mapper = {}
     @staticmethod
     def model(goods_id):
-        table_index = goods_id%10
+        table_index = goods_id%100
         class_name = 'GoodsDesc_%d' % table_index
         ModelClass = GoodsDesc._mapper.get(class_name, None)
         if ModelClass is None:
@@ -20,7 +20,6 @@ class GoodsDesc(object):
                 'goods_id' : db.Column(db.Integer, primary_key=True),
                 'goods_desc' : db.Column(db.Text, default=None),
             })
-
             GoodsDesc._mapper[class_name] = ModelClass
         cls = ModelClass()
         cls.goods_id = goods_id

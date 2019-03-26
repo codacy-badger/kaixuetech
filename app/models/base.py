@@ -85,6 +85,7 @@ class Base(db.Model):
         return self.fields
 
     def __getitem__(self, item):
+
         return getattr(self, item)
 
     @property

@@ -15,6 +15,7 @@ class CourseWare(Base):
     ware_page = Column(Integer, comment='课件页码')
     paper_info_id= Column(Integer, comment='试卷id',index=True)
     user_id = Column(Integer, comment='操作用户id',index=True)
+
     @orm.reconstructor
     def __init__(self):
         self.fields = ['id', 'course_info_id','ware_page','paper_info_id','user_id']

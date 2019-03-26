@@ -19,7 +19,7 @@ class CourseInfo(Base):
     subject_id= Column(Integer, comment='班级id',index=True)
     @orm.reconstructor
     def __init__(self):
-        self.fields = ['id', 'name','subject_id','kind','child_id']
+        self.fields = ['id', 'name','subject_id','kind','child_id','create_time','change_num']
 
     @staticmethod
     def add(name,kind,child_id,subject_id):

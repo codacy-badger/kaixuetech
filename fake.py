@@ -27,10 +27,10 @@ from app.models.user import User
 #     with app.app_context():
 #         with db.auto_commit():
 #             School().add(schoolcode, schoolname, province)
-# def add_pro(province):
-#     with app.app_context():
-#         with db.auto_commit():
-#             SchoolProvince().add(province)
+def add_pro(province):
+    with app.app_context():
+        with db.auto_commit():
+            SchoolProvince().add(province)
 if __name__ == '__main__':
     app = create_app()
 
@@ -40,5 +40,5 @@ if __name__ == '__main__':
     # import pandas as pd
     # data=pd.read_csv("C:/Users/admin/Desktop/school.csv")
     # province=list(set(data["province"]))
-    # # list(map(add_pro,province))
+    # list(map(add_pro,province))
     # list(map(addschool,data["schoolid"],data["schoolname"],data["province"]))

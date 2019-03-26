@@ -127,7 +127,7 @@ class DurationForm (Form):
     site= IntegerField(validators=[DataRequired()])
     folder_id=IntegerField(validators=[])
 class TestForm(Form):
-    sec_id= StringField(validators=[DataRequired()])
+    sec_id= StringField(validators=[])
     subject_id=IntegerField(validators=[DataRequired()])
 
 
@@ -169,6 +169,22 @@ class AnswerForm(Form):
     paper_id=IntegerField(validators=[DataRequired()])
     answer = FieldList(FloatField())
 
-class FileNameForm(invitationForm):
+class FileNameForm(Form):
     id=IntegerField(validators=[DataRequired()])
+    name=StringField(validators=[DataRequired()])
+
+class DeleteOneForm(Form):
+    id=IntegerField(validators=[DataRequired()])
+
+class DeletetwoForm(Form):
+    id=IntegerField(validators=[DataRequired()])
+    id2 = IntegerField(validators=[DataRequired()])
+
+class GetOneForm(Form):
+    id=IntegerField(validators=[DataRequired()])
+
+class GettwoForm(Form):
+    id=IntegerField(validators=[DataRequired()])
+    id2 = IntegerField(validators=[DataRequired()])
+class NameForm(Form):
     name=StringField(validators=[DataRequired()])

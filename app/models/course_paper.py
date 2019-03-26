@@ -16,7 +16,7 @@ class CoursePaper(Base):
     start_time = Column(DateTime, comment='开始时间')
     @orm.reconstructor
     def __init__(self):
-        self.fields = ['id', 'name','paper_state']
+        self.fields = ['id', 'name','paper_state','create_time']
 
     @staticmethod
     def add(name):

@@ -22,6 +22,16 @@ class ClassTeacher(Base):
     @orm.reconstructor
     def __init__(self):
         self.fields = ['id','name','head_url','school_name','create_time','school_id','abstract']
+
+    def to_json(self):
+        dict = self.__dict__
+        print(dict)
+        if "_sa_instance_state" in dict:
+            del dict["_sa_instance_state"]
+        return dict
+
+
+
     def admin(self,head_url,abstract,name,school_id):
 
         self.head_url = head_url
