@@ -7,7 +7,7 @@ from app.libs.error_code import Success, Uploadmore, ParameterException, UpflieE
 from app.libs.redprint import Redprint
 from app.libs.string_secret import add_secret, untie_secret
 from app.libs.token_auth import auth
-from app.libs.upload import qiniu_upload_file, aliyun_upload_file
+from app.libs.upload import  aliyun_upload_file
 
 import json
 
@@ -97,7 +97,7 @@ def upload(site):
                  type: "int"
 
     """
-    if type(site) is not int:
+    if  not isinstance(site,'int'):
         raise ParameterException()
     f = request.files
     file_list = [fi for fi in f]

@@ -13,7 +13,7 @@ from app.models.class_subject import ClassSubject
 from app.models.class_teach import ClassTeach
 from app.models.class_teacher import ClassTeacher
 from app.validators.adminforms import invitationForm
-from app.validators.classforms import SchoolForm, TeDetailForm, SubjectForm
+from app.validators.classforms import  SubjectForm
 
 
 @api.route('/teach', methods=['POST'])

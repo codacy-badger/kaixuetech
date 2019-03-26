@@ -8,8 +8,8 @@ from app.libs.redis_method import change_school, getschool
 from app.libs.redprint import Redprint
 from app.libs.token_auth import auth
 from app.models.school import School
-from app.models.school_province import SchoolProvince
-from app.validators.adminforms import DelSchoolForm, DelAdminForm
+
+from app.validators.adminforms import  DelAdminForm
 
 api = Redprint('admin_school')
 

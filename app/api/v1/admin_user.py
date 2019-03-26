@@ -12,7 +12,7 @@ from app.libs.token_auth import auth
 
 from app.models.user import User
 from app.validators.adminforms import DelAdminForm, AdminAuthForm, UserPutForm, ChPassForm
-from app.validators.classforms import PageForm
+
 
 api = Redprint('admin_user')
 

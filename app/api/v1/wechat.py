@@ -3,7 +3,7 @@
 # @Author  : 昨夜
 # @Email   : 903165495@qq.com
 from app.libs.redprint import Redprint
-from app.libs.token_auth import auth
+
 from app.libs.url_format import get_url_format
 from app.validators.forms import JsCodeForm
 from flask import jsonify

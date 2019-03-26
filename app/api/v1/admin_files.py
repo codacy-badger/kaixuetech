@@ -10,7 +10,7 @@ from app.libs.redprint import Redprint
 from app.libs.token_auth import  auth
 from app.models.duration import Duration
 from app.models.user import User
-from app.validators.classforms import PageForm, onedataForm
+from app.validators.classforms import  onedataForm
 from app.validators.forms import FileNameForm
 
 api = Redprint('admin_files')

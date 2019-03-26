@@ -14,7 +14,7 @@ from app.models.course_paper import CoursePaper
 from app.models.course_question import CourseQuestion
 from app.models.course_ware import CourseWare
 from app.validators.classforms import onePageForm
-from app.validators.forms import DeleteOneForm, DeletetwoForm, GetOneForm
+from app.validators.forms import DeleteOneForm, DeletetwoForm
 
 api = Redprint('admin_interact')
 

@@ -7,9 +7,9 @@ from flask import request
 from app.libs.aliyun_oss import stsauth
 from app.libs.error_code import ParameterException, Success
 from app.libs.redprint import Redprint
-from app.libs.string_secret import add_secret, add_secret1
+from app.libs.string_secret import add_secret
 from app.libs.token_auth import auth
-from app.libs.upload import qiniu_upload_file, aliyun_upload_file, aliyun_get_url
+from app.libs.upload import  aliyun_upload_file, aliyun_get_url
 import json
 
 from app.validators.forms import NameForm

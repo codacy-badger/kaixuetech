@@ -5,13 +5,13 @@
 from flask import jsonify, request
 from sqlalchemy import desc
 
-from app.libs.error_code import Success, Forbidden, DeleteSuccess, ParameterException
+from app.libs.error_code import Success,  DeleteSuccess, ParameterException
 from app.libs.get_method import get_method, get_join_method
-from app.libs.redis_method import code_to_school, code_to_province
+from app.libs.redis_method import  code_to_province
 from app.libs.redprint import Redprint
-from app.libs.string_secret import add_secret, untie_secret
+from app.libs.string_secret import  untie_secret
 from app.libs.token_auth import auth
-from app.libs.upload import qiniu_upload_file, aliyun_get_url
+
 from app.models.class_student import ClassStudent
 from app.models.class_study import ClassStudy
 from app.models.class_subject import ClassSubject
@@ -19,9 +19,9 @@ from app.models.class_teach import ClassTeach
 from app.models.class_teacher import ClassTeacher
 
 from app.models.user import User
-from app.validators.adminforms import DelAdminForm, AdminAuthForm, UserPutForm, ChPassForm, SchoolForm, TeDetailForm, \
+from app.validators.adminforms import  AdminAuthForm, SchoolForm, TeDetailForm, \
     StDetailForm
-from app.validators.classforms import PageForm, onePageForm
+from app.validators.classforms import  onePageForm
 import json
 api = Redprint('admin_class')
 #获取老师列表

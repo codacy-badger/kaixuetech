@@ -3,7 +3,7 @@
 # @Author  : 昨夜
 # @Email   : 903165495@qq.com
 
-from flask import jsonify, g, request, session
+from flask import jsonify, g
 
 
 from app.libs.error_code import Success
