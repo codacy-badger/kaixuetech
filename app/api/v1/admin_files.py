@@ -90,8 +90,8 @@ def change_filename():
 
     """
     form = FileNameForm().validate_for_api()
-    id=form.id.data
+    duid=form.id.data
     name = form.name.data
-    dur=Duration.query.filter_by(id=id).first_or_404()
+    dur=Duration.query.filter_by(id=duid).first_or_404()
     dur.old_name=name+'.'+dur.type
     return Success(data=dur)

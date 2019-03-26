@@ -1,6 +1,6 @@
 from flask import Blueprint
 from app.api.v1 import user, client, token, \
-     wechat, attend,duration,interaction,\
+     wechat, attend,duration,\
     admin_user,admin_class,admin_school,admin_libs,admin_attend,admin_files,admin_interact
 from app.api.v1 import classs
 from app.api.v1 import interact

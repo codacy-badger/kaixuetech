@@ -216,12 +216,12 @@ def del_question():
                        example: 1
     """
     form = DeletetwoForm().validate_for_api()
-    id=form.id.data
+    id1=form.id.data
     id2 = form.id2.data
     #查找
     midquestion=PaperMidQuestion.query.join(CourseQuestion,
                                             CourseQuestion.id==PaperMidQuestion.question_id
-                                            ).filter(CourseQuestion.id==id,
+                                            ).filter(CourseQuestion.id==id1,
                                                      PaperMidQuestion.paper_id==id2,
                                                      PaperMidQuestion.status==1
                                                      ).first_or_404()
@@ -257,13 +257,13 @@ def del_paper():
 
     """
     form = DeleteOneForm().validate_for_api()
-    id=form.id.data
+    id1=form.id.data
 
     #查找
 
     midquestion=PaperMidQuestion.query.join(CoursePaper,
                                             CoursePaper.id==PaperMidQuestion.paper_id
-                                            ).filter(CoursePaper.id==id,
+                                            ).filter(CoursePaper.id==id1,
                                                      PaperMidQuestion.status==1
                                                      ).join(CourseWare,
                                                             CourseWare.paper_info_id==CoursePaper.id
