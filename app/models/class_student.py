@@ -2,7 +2,7 @@
 # @Time    : 2019/3/13 13:05
 # @Author  : 昨夜
 # @Email   : 903165495@qq.com
-from sqlalchemy import Column, String, Integer, Text, orm, SmallInteger, ForeignKey
+from sqlalchemy import Column, String, Integer, Text, orm, SmallInteger
 
 from app.libs.error_code import RepeatException1, ParameterException
 from app.libs.redis_method import code_to_school

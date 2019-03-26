@@ -5,7 +5,7 @@
 """
 课程的课件信息
 """
-from sqlalchemy import Column, Integer, String, orm, SmallInteger
+from sqlalchemy import Column, Integer, orm
 from app.models.base import Base, db
 
 class CourseWare(Base):

@@ -5,7 +5,7 @@
 """
 考卷的问题
 """
-from sqlalchemy import Column, Integer, Text,String, orm, SmallInteger
+from sqlalchemy import Column, Integer, Text, orm
 from app.models.base import Base, db
 
 class CourseQuestion(Base):

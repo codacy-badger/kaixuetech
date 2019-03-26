@@ -3,7 +3,7 @@
 # @Author  : 昨夜
 # @Email   : 903165495@qq.com
 
-from sqlalchemy import Column, String, Integer, orm, SmallInteger, ForeignKey, Boolean
+from sqlalchemy import Column, String, Integer, orm, Boolean
 from app.models.base import Base, db
 
 

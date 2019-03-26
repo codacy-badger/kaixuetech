@@ -3,8 +3,8 @@
 # @Author  : 昨夜
 # @Email   : 903165495@qq.com
 
-from sqlalchemy import Column, String, SmallInteger, Integer, orm, Text, ForeignKey
-from app.models.base import Base, db
+from sqlalchemy import Column, String,  Integer
+from app.models.base import Base
 
 class DurationPage(Base):
     __tablename__ = 'duration_page'

@@ -2,9 +2,8 @@
 # @Time    : 2019/3/12 11:04
 # @Author  : 昨夜
 # @Email   : 903165495@qq.com
-from sqlalchemy import Column, String, Integer, Text, orm, SmallInteger, ForeignKey, DateTime
-from sqlalchemy.orm import relationship
-from datetime import datetime
+from sqlalchemy import Column, String, Integer, orm, SmallInteger, DateTime
+
 from app.models.base import Base, db
 
 

@@ -3,7 +3,7 @@
 from app.libs.error_code import NotFound, ParameterException, RepeatException1, Forbidden
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy as _SQLAlchemy, BaseQuery
-from sqlalchemy import inspect, Column, Integer, SmallInteger, orm,DateTime
+from sqlalchemy import inspect, Column,  SmallInteger, orm,DateTime
 from contextlib import contextmanager
 
 

@@ -69,9 +69,9 @@ def teacher_add():
     list(map(add_student,studens))
     return Success(data=attend)
 
-"""
-结束签到
-"""
+
+#结束签到
+
 @api.route('/teend', methods=['POST'])
 @auth.login_required
 def teacher_end():

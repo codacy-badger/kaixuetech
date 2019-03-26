@@ -2,7 +2,7 @@
 # @Time    : 2019/3/14 17:13
 # @Author  : 昨夜
 # @Email   : 903165495@qq.com
-from sqlalchemy import Column, String, Integer, orm, SmallInteger, ForeignKey, Boolean
+from sqlalchemy import Column, String, Integer, orm
 from app.models.base import Base, db
 
 
